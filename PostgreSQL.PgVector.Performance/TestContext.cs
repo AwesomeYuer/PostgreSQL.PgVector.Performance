@@ -33,7 +33,7 @@ public class TestContext
                                 .ToArray();
 
         var pgVector = new Vector(floats);
-        var limit = 10;
+        var limit = 100;
         var sql = @$"
 SELECT
     *
