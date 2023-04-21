@@ -17,7 +17,7 @@ public class Program
     public static void Main(string[] args)
     {
         Console.WriteLine("Hello, World!");
-        //GlobalManager.ConnectionString = string.Format(GlobalManager.ConnectionString, args[0]);
+        GlobalManager.ConnectionString = string.Format(GlobalManager.ConnectionString, args[0]);
         //Thread.Sleep(5 * 1000);
 
         //new Program().ProcessAsync().Wait();
