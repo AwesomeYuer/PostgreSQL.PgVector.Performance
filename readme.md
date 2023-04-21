@@ -16,6 +16,10 @@ CREATE DATABASE pgvectors
 
 
 
+create extension vector;
+
+
+
 -- Table: public.embeddings
 
 -- DROP TABLE IF EXISTS public.embeddings;
@@ -45,5 +49,13 @@ CREATE INDEX IF NOT EXISTS ivfflat_embedding
     ON public.embeddings USING ivfflat
     (embedding)
     TABLESPACE pg_default;
+
+
+create extension pg_trgm;
+
+SELECT strict_word_similarity('word', 'two words'), similarity('word', 'words');
+
+
+
 
 ```
