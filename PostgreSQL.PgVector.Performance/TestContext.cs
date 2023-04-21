@@ -22,7 +22,7 @@ namespace PostgreSQL.PgVector.Performance
 
             using var npgsqlDataSource = dataSourceBuilder.Build();
             var connection = await npgsqlDataSource.OpenConnectionAsync();
-            Console.WriteLine("Opened");
+            //Console.WriteLine("Opened");
 
             var floats = new float[1536]
                                 .Select
