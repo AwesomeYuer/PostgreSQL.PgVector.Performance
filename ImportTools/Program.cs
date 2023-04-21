@@ -76,7 +76,7 @@ IEnumerable<(int GroupId, float[] VectorArray)>
     var groupId = string.Empty;
     var lastGroupId = string.Empty;
     var index = -1;
-    var floatsArray = new float[arrayLength];
+    var floats = new float[arrayLength];
 
     while
         (
@@ -103,13 +103,13 @@ IEnumerable<(int GroupId, float[] VectorArray)>
                 return
                     (
                           int.Parse(lastGroupId)
-                        , floatsArray
+                        , floats
                     );
-            floatsArray = new float[floatsArray.Length];
+            floats = new float[floats.Length];
             lastGroupId = groupId;
         }
         index = int.Parse(a[1].Trim());
-        floatsArray[index] = float.Parse(a[2].Trim());
+        floats[index] = float.Parse(a[2].Trim());
     }
     if (index <= arrayLength)
     {
@@ -117,7 +117,7 @@ IEnumerable<(int GroupId, float[] VectorArray)>
             return
                 (
                       int.Parse(groupId)
-                    , floatsArray
+                    , floats
                 );
     }
 }
