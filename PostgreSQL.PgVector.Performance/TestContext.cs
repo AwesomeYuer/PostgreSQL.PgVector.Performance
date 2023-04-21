@@ -17,7 +17,7 @@ namespace PostgreSQL.PgVector.Performance
         [Benchmark()]
         public async Task ProcessAsync()
         {
-            Thread.Sleep(10);
+            Thread.Sleep(200);
             var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.ConnectionString);
             dataSourceBuilder.UseVector();
 
