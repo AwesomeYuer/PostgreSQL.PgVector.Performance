@@ -14,6 +14,8 @@ CREATE DATABASE pgvectors
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
 
+
+
 -- Table: public.embeddings
 
 -- DROP TABLE IF EXISTS public.embeddings;
@@ -28,8 +30,13 @@ CREATE TABLE IF NOT EXISTS public.embeddings
 
 TABLESPACE pg_default;
 
+
+
 ALTER TABLE IF EXISTS public.embeddings
     OWNER to sa;
+
+
+
 -- Index: ivfflat_embedding
 
 -- DROP INDEX IF EXISTS public.ivfflat_embedding;
