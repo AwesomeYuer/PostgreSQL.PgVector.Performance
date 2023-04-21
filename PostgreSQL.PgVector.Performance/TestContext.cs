@@ -12,7 +12,7 @@ public class TestContext
     [Benchmark()]
     public async Task ProcessAsync()
     {
-        Thread.Sleep(100);
+        Thread.Sleep(200);
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.ConnectionString);
         dataSourceBuilder.UseVector();
 
