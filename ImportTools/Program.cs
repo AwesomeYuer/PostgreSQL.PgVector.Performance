@@ -123,17 +123,17 @@ IEnumerable<(int GroupId, float[] VectorArray)>
 }
 
 
-string ReplaceToOneWhiteSpace(string s)
+string ReplaceToOneWhiteSpace(string text)
 {
-    var length = s.Length;
+    var length = text.Length;
     var lastLength = -1;
     do
     {
         lastLength = length;
-        s = s.Replace("  ", " ");
-        length = s.Length;
+        text = text.Replace("  ", " ");
+        length = text.Length;
     }
     while
         (lastLength != length);
-    return s;
+    return text;
 }
