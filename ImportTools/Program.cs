@@ -50,6 +50,7 @@ await using (var sqlCommand = new NpgsqlCommand())
         {
             sqlCommand.CommandText = $"{sql}\r\n{values}";
             await sqlCommand.ExecuteNonQueryAsync();
+            sqlCommand.Parameters.Clear();
             //i = 0;
             j = 0;
             values = string.Empty;
@@ -61,6 +62,7 @@ await using (var sqlCommand = new NpgsqlCommand())
     {
         sqlCommand.CommandText = $"{sql}\r\n{values}";
         await sqlCommand.ExecuteNonQueryAsync();
+        sqlCommand.Parameters.Clear();
         Console.WriteLine($"Total: {i} rows inserted!");
     }
 }
