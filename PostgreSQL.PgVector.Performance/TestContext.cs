@@ -73,26 +73,26 @@ LIMIT $2;
             }
         }
 
-        [Benchmark]
-        public async Task ProcessAsync2()
-        {
+        //[Benchmark]
+        //public async Task ProcessAsync2()
+        //{
 
-            //await using
-            //    (
-            //        DbDataReader dataReader =
-            //                        await _npgsqlCommand.ExecuteReaderAsync()
-            //    )
-            //{
-            //    while (await dataReader.ReadAsync())
-            //    {
-            //        IDataRecord dataRecord = dataReader;
-            //        var fieldsCount = dataRecord.FieldCount;
-            //        for (var i = 0; i < fieldsCount; i++)
-            //        {
-            //            _ = dataRecord[dataReader.GetName(i)];
-            //        }
-            //    }
-            //}
-        }
+        //    //await using
+        //    //    (
+        //    //        DbDataReader dataReader =
+        //    //                        await _npgsqlCommand.ExecuteReaderAsync()
+        //    //    )
+        //    //{
+        //    //    while (await dataReader.ReadAsync())
+        //    //    {
+        //    //        IDataRecord dataRecord = dataReader;
+        //    //        var fieldsCount = dataRecord.FieldCount;
+        //    //        for (var i = 0; i < fieldsCount; i++)
+        //    //        {
+        //    //            _ = dataRecord[dataReader.GetName(i)];
+        //    //        }
+        //    //    }
+        //    //}
+        //}
     }
 }
