@@ -13,12 +13,12 @@ public class TestContext
     public async Task ProcessAsync()
     {
         //Thread.Sleep(200);
-        await Task.Delay(200);
+        //await Task.Delay(200);
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.ConnectionString);
         dataSourceBuilder.UseVector();
 
         using var npgsqlDataSource = dataSourceBuilder.Build();
-        var connection = await npgsqlDataSource.OpenConnectionAsync();
+        using var connection = await npgsqlDataSource.OpenConnectionAsync();
         //Console.WriteLine("Opened");
 
         var floats = new float[1536]
