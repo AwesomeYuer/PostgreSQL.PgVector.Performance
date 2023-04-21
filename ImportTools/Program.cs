@@ -2,33 +2,10 @@
 using Npgsql;
 using Pgvector;
 using Pgvector.Npgsql;
-using System.Data;
 
 Console.WriteLine("Hello, World!");
 
-var mod = 101;
-var i = 0;
-var groups =
-        ReadDataAsIEnumerable
-                    (args[1])
-                            .Select
-                                (
-                                    (x) =>
-                                    {
-                                        i ++;
-                                        return
-                                            x;
-                                    }
-                                )
-                            .GroupBy
-                                (
-                                    (x) =>
-                                    {
-                                        return
-                                            (i - 1)/mod;
-                                    }
-                                )
-                    ;
+var lines = ReadDataAsIEnumerable(args[2]);
 
 var connectionString = $"Host=localhost;Database=pgvectors;User Id=sa;Password={args[0]}";
 
@@ -42,38 +19,49 @@ var sql = @$"
 INSERT INTO embeddings (content, vector_id, embedding)
 VALUES
 ";
-foreach (var group in groups)
+
+await using (var sqlCommand = new NpgsqlCommand())
 {
-    Console.WriteLine($"{nameof(group.Key)}: {group.Key}");
-    await using (var sqlCommand = new NpgsqlCommand())
+    sqlCommand.Connection = connection;
+    var mod = int.Parse(args[1]);
+    var j = 0;
+    var values = string.Empty;
+    var i = 0;
+    foreach (var item in lines)
     {
-        var j = 0;
-        var values = string.Empty;
-        foreach (var item in group)
-        {
-            //Console.WriteLine($"{nameof(item.GroupId)}: {item.GroupId}");
-            var content = Guid.NewGuid().ToString();
-            sqlCommand.Parameters.AddWithValue(content);
+        i++;
+        //Console.WriteLine($"{nameof(item.GroupId)}: {item.GroupId}");
+        var content = Guid.NewGuid().ToString();
+        sqlCommand.Parameters.AddWithValue(content);
 
-            // 2
-            sqlCommand.Parameters.AddWithValue(item.GroupId);
+        // 2
+        sqlCommand.Parameters.AddWithValue(item.GroupId);
 
-            // 3
-            var pgVector = new Vector(item.VectorArray);
-            sqlCommand.Parameters.AddWithValue(pgVector);
+        // 3
+        var pgVector = new Vector(item.VectorArray);
+        sqlCommand.Parameters.AddWithValue(pgVector);
 
-            if (!string.IsNullOrEmpty(values))
-            {
-                values = $"{values}\r\n, ";
-            }
-            values = $"{values}(${++ j}, ${++ j}, ${++ j})";
-        }
         if (!string.IsNullOrEmpty(values))
         {
-            sqlCommand.Connection = connection;
+            values = $"{values}\r\n, ";
+        }
+        values = $"{values}(${++ j}, ${++ j}, ${++ j})";
+        if (i % mod == 0)
+        {
             sqlCommand.CommandText = $"{sql}\r\n{values}";
             await sqlCommand.ExecuteNonQueryAsync();
+            //i = 0;
+            j = 0;
+            values = string.Empty;
+            Console.WriteLine($"Total: {i} rows inserted!");
         }
+        
+    }
+    if (!string.IsNullOrEmpty(values))
+    {
+        sqlCommand.CommandText = $"{sql}\r\n{values}";
+        await sqlCommand.ExecuteNonQueryAsync();
+        Console.WriteLine($"Total: {i} rows inserted!");
     }
 }
 
