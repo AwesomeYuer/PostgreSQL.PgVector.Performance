@@ -13,7 +13,7 @@ var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 dataSourceBuilder.UseVector();
 
 using var npgsqlDataSource = dataSourceBuilder.Build();
-using var connection = npgsqlDataSource.OpenConnection();
+using var connection = await npgsqlDataSource.OpenConnectionAsync();
 
 var sql = @$"
 INSERT INTO embeddings (content, vector_id, embedding)
