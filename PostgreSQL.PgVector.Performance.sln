@@ -9,7 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportTools", "ImportTools\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pgvector-dotNET", "pgvector-dotNET\pgvector-dotNET.csproj", "{67BA99FC-D080-4106-81F0-3E42DC2A1D35}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.pgvector-dotNET", "00.pgvector-dotNET", "{C4697223-E958-43FB-9371-DC214D27DC51}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10.pgvector-dotNET", "10.pgvector-dotNET", "{C4697223-E958-43FB-9371-DC214D27DC51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Solution Items", "{8E70650A-C449-4904-89A4-ABA887A50B90}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
