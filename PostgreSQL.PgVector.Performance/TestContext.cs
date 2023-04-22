@@ -16,6 +16,7 @@ public class TestContext
         dataSourceBuilder.UseVector();
 
         using var npgsqlDataSource = dataSourceBuilder.Build();
+        // don't using for finally close only for return to connection pool
         var connection = await npgsqlDataSource.OpenConnectionAsync();
 
         try
@@ -88,6 +89,8 @@ LIMIT $2;
         }
         finally
         {
+            // return to connection pool
+            // don't dispose
             await connection.CloseAsync();
         }
     }
