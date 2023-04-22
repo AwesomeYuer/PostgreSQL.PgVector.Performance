@@ -9,35 +9,35 @@ namespace PostgreSQL.PgVector.Performance;
 
 public class TestContext
 {
-    [Benchmark()]
+    [Benchmark]
     public async Task ProcessAsync()
     {
-        //Thread.Sleep(200);
-        //await Task.Delay(200);
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.ConnectionString);
         dataSourceBuilder.UseVector();
 
         using var npgsqlDataSource = dataSourceBuilder.Build();
         using var connection = await npgsqlDataSource.OpenConnectionAsync();
-        //Console.WriteLine("Opened");
 
-        var floats = new float[1536]
-                                .Select
-                                    (
-                                        (x) =>
-                                        {
-                                            return
-                                                (float) new Random().NextDouble();
-                                        }
-                                    )
-                                .ToArray();
+        var floats =
+                new float[1536]
+                            .Select
+                                (
+                                    (x) =>
+                                    {
+                                        return
+                                            (float)
+                                                new Random()
+                                                        .NextDouble();
+                                    }
+                                )
+                            .ToArray();
 
         var pgVector = new Vector(floats);
         var limit = 20;
         var sql = @$"
 WITH
 T
-as
+AS
 (
     SELECT
         *
@@ -50,8 +50,8 @@ SELECT
     *
     , (1 - a.""CosineDistance"")    as ""CosineSimilarity""
 FROM
-    T a
-order by
+    T AS a
+ORDER BY
     --""EuclideanL2Distance""
     ""CosineDistance"" 
     --""CosineSimilarity""
@@ -84,26 +84,4 @@ LIMIT $2;
             //Console.WriteLine(j);
         }
     }
-
-    //[Benchmark]
-    //public async Task ProcessAsync2()
-    //{
-
-    //    //await using
-    //    //    (
-    //    //        DbDataReader dataReader =
-    //    //                        await _npgsqlCommand.ExecuteReaderAsync()
-    //    //    )
-    //    //{
-    //    //    while (await dataReader.ReadAsync())
-    //    //    {
-    //    //        IDataRecord dataRecord = dataReader;
-    //    //        var fieldsCount = dataRecord.FieldCount;
-    //    //        for (var i = 0; i < fieldsCount; i++)
-    //    //        {
-    //    //            _ = dataRecord[dataReader.GetName(i)];
-    //    //        }
-    //    //    }
-    //    //}
-    //}
 }
