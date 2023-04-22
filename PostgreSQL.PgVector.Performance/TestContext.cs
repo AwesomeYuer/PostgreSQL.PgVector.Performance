@@ -35,14 +35,26 @@ public class TestContext
         var pgVector = new Vector(floats);
         var limit = 5;
         var sql = @$"
+WITH
+T
+as
+(
+    SELECT
+        *
+        , embedding <-> $1::vector  as ""EuclideanL2Distance""
+        , embedding <=> $1::vector  as ""CosineDistance""
+    FROM
+        embeddings AS a
+)
 SELECT
     *
-    , embedding <-> $1::vector                      as ""EuclideanDistance""
-    , cosine_distance(embedding, $1::vector)        as ""CosineDistance""
+    , (1 - a.""CosineDistance"")    as ""CosineSimlarity""
 FROM
-    embeddings AS a
+    T a
 order by
-    ""EuclideanDistance""
+    --""EuclideanL2Distance""
+    ""CosineSimilarity"" 
+                DESC
 LIMIT $2;
 ";
         using var npgsqlCommand = new NpgsqlCommand();
