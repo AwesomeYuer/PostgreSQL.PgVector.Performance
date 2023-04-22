@@ -19,7 +19,6 @@ CREATE DATABASE pgvectors
 create extension vector;
 
 
-
 -- Table: public.embeddings
 
 -- DROP TABLE IF EXISTS public.embeddings;
@@ -34,18 +33,29 @@ CREATE TABLE IF NOT EXISTS public.embeddings
 
 TABLESPACE pg_default;
 
-
-
 ALTER TABLE IF EXISTS public.embeddings
     OWNER to sa;
+-- Index: idx_ivfflat_vector_cosine_ops
 
+-- DROP INDEX IF EXISTS public.idx_ivfflat_vector_cosine_ops;
 
+CREATE INDEX IF NOT EXISTS idx_ivfflat_vector_cosine_ops
+    ON public.embeddings USING ivfflat
+    (embedding vector_cosine_ops)
+    TABLESPACE pg_default;
+-- Index: idx_ivfflat_vector_ip_ops
 
--- Index: ivfflat_embedding
+-- DROP INDEX IF EXISTS public.idx_ivfflat_vector_ip_ops;
 
--- DROP INDEX IF EXISTS public.ivfflat_embedding;
+CREATE INDEX IF NOT EXISTS idx_ivfflat_vector_ip_ops
+    ON public.embeddings USING ivfflat
+    (embedding vector_ip_ops)
+    TABLESPACE pg_default;
+-- Index: idx_ivfflat_vector_l2_ops
 
-CREATE INDEX IF NOT EXISTS ivfflat_embedding
+-- DROP INDEX IF EXISTS public.idx_ivfflat_vector_l2_ops;
+
+CREATE INDEX IF NOT EXISTS idx_ivfflat_vector_l2_ops
     ON public.embeddings USING ivfflat
     (embedding)
     TABLESPACE pg_default;
