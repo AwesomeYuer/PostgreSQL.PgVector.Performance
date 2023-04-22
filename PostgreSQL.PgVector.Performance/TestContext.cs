@@ -53,9 +53,9 @@ FROM
     T a
 order by
     --""EuclideanL2Distance""
-    --""CosineDistance"" 
-    ""CosineSimilarity""
-                DESC
+    ""CosineDistance"" 
+    --""CosineSimilarity""
+                --DESC
 LIMIT $2;
 ";
         using var npgsqlCommand = new NpgsqlCommand();
