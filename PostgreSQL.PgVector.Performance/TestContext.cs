@@ -21,18 +21,18 @@ public class TestContext
         try
         {
             var floats =
-        new float[1536]
-                    .Select
-                        (
-                            (x) =>
-                            {
-                                return
-                                    (float)
-                                        new Random()
-                                                .NextDouble();
-                            }
-                        )
-                    .ToArray();
+                    new float[1536]
+                                .Select
+                                    (
+                                        (x) =>
+                                        {
+                                            return
+                                                (float)
+                                                    new Random()
+                                                            .NextDouble();
+                                        }
+                                    )
+                                .ToArray();
 
             var pgVector = new Vector(floats);
             var limit = 20;
