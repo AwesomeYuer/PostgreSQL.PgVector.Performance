@@ -48,7 +48,7 @@ as
 )
 SELECT
     *
-    , (1 - a.""CosineDistance"")    as ""CosineSimlarity""
+    , (1 - a.""CosineDistance"")    as ""CosineSimilarity""
 FROM
     T a
 order by
