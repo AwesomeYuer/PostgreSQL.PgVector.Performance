@@ -28,7 +28,7 @@ app
                 return "ok";
             }
         )
-.WithName("pgsql");
+    .WithName("pgsql");
 
 app.Run();
 
