@@ -89,8 +89,8 @@ LIMIT $2;
         }
         finally
         {
+            // don't dispose, just close only
             // return to connection pool
-            // don't dispose
             await connection.CloseAsync();
         }
     }
