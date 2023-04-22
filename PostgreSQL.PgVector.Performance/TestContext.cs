@@ -16,25 +16,27 @@ public class TestContext
         dataSourceBuilder.UseVector();
 
         using var npgsqlDataSource = dataSourceBuilder.Build();
-        using var connection = await npgsqlDataSource.OpenConnectionAsync();
+        var connection = await npgsqlDataSource.OpenConnectionAsync();
 
-        var floats =
-                new float[1536]
-                            .Select
-                                (
-                                    (x) =>
-                                    {
-                                        return
-                                            (float)
-                                                new Random()
-                                                        .NextDouble();
-                                    }
-                                )
-                            .ToArray();
+        try
+        {
+            var floats =
+        new float[1536]
+                    .Select
+                        (
+                            (x) =>
+                            {
+                                return
+                                    (float)
+                                        new Random()
+                                                .NextDouble();
+                            }
+                        )
+                    .ToArray();
 
-        var pgVector = new Vector(floats);
-        var limit = 20;
-        var sql = @$"
+            var pgVector = new Vector(floats);
+            var limit = 20;
+            var sql = @$"
 WITH
 T
 AS
@@ -58,30 +60,35 @@ ORDER BY
                 --DESC
 LIMIT $2;
 ";
-        using var npgsqlCommand = new NpgsqlCommand();
-        npgsqlCommand.Connection = connection;
-        npgsqlCommand.CommandText = sql;
-        npgsqlCommand.Parameters.AddWithValue(pgVector);
-        npgsqlCommand.Parameters.AddWithValue(limit);
+            using var npgsqlCommand = new NpgsqlCommand();
+            npgsqlCommand.Connection = connection;
+            npgsqlCommand.CommandText = sql;
+            npgsqlCommand.Parameters.AddWithValue(pgVector);
+            npgsqlCommand.Parameters.AddWithValue(limit);
 
-        using
-            (
-                DbDataReader dataReader =
-                                await npgsqlCommand.ExecuteReaderAsync()
-            )
-        {
-            var j = 0;
-            while (await dataReader.ReadAsync())
+            using
+                (
+                    DbDataReader dataReader =
+                                    await npgsqlCommand.ExecuteReaderAsync()
+                )
             {
-                IDataRecord dataRecord = dataReader;
-                var fieldsCount = dataRecord.FieldCount;
-                for (var i = 0; i < fieldsCount; i++)
+                var j = 0;
+                while (await dataReader.ReadAsync())
                 {
-                    _ = dataRecord[dataReader.GetName(i)];
+                    IDataRecord dataRecord = dataReader;
+                    var fieldsCount = dataRecord.FieldCount;
+                    for (var i = 0; i < fieldsCount; i++)
+                    {
+                        _ = dataRecord[dataReader.GetName(i)];
+                    }
+                    j++;
                 }
-                j++;
+                //Console.WriteLine(j);
             }
-            //Console.WriteLine(j);
+        }
+        finally
+        {
+            await connection.CloseAsync();
         }
     }
 }
