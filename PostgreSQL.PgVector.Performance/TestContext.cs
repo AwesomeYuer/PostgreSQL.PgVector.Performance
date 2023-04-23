@@ -94,4 +94,91 @@ LIMIT $2;
             await connection.CloseAsync();
         }
     }
+
+
+    [Benchmark]
+    public async Task ProcessAsync2()
+    {
+        var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.ConnectionString);
+        dataSourceBuilder.UseVector();
+
+        using var npgsqlDataSource = dataSourceBuilder.Build();
+        // don't using for finally close only for return to connection pool
+        var connection = await npgsqlDataSource.OpenConnectionAsync();
+
+        try
+        {
+            var floats =
+                    new float[1536]
+                                .Select
+                                    (
+                                        (x) =>
+                                        {
+                                            return
+                                                (float)
+                                                    new Random()
+                                                            .NextDouble();
+                                        }
+                                    )
+                                .ToArray();
+
+            var pgVector = new Vector(floats);
+            var limit = 20;
+            var sql = @$"
+WITH
+T
+AS
+(
+    SELECT
+        *
+        , title_vector <-> $1::vector  as ""EuclideanL2Distance""
+        , title_vector <=> $1::vector  as ""CosineDistance""
+    FROM
+        wikipedia AS a
+)
+SELECT
+    *
+    , (1 - a.""CosineDistance"")    as ""CosineSimilarity""
+FROM
+    T AS a
+ORDER BY
+    --""EuclideanL2Distance""
+    ""CosineDistance"" 
+    --""CosineSimilarity""
+                --DESC
+LIMIT $2;
+";
+            using var npgsqlCommand = new NpgsqlCommand();
+            npgsqlCommand.Connection = connection;
+            npgsqlCommand.CommandText = sql;
+            npgsqlCommand.Parameters.AddWithValue(pgVector);
+            npgsqlCommand.Parameters.AddWithValue(limit);
+
+            using
+                (
+                    DbDataReader dataReader =
+                                    await npgsqlCommand.ExecuteReaderAsync()
+                )
+            {
+                var j = 0;
+                while (await dataReader.ReadAsync())
+                {
+                    IDataRecord dataRecord = dataReader;
+                    var fieldsCount = dataRecord.FieldCount;
+                    for (var i = 0; i < fieldsCount; i++)
+                    {
+                        _ = dataRecord[dataReader.GetName(i)];
+                    }
+                    j++;
+                }
+                //Console.WriteLine(j);
+            }
+        }
+        finally
+        {
+            // don't dispose, just close only
+            // return to connection pool
+            await connection.CloseAsync();
+        }
+    }
 }

@@ -72,6 +72,27 @@ EXPLAIN ANALYZE SELECT * FROM embeddings ORDER BY embedding <-> '[3,1,2]' LIMIT 
 ```
 
 
+
+```sql
+CREATE TABLE public.wikipedia
+(
+    id int,
+    url character varying(512),
+    title character varying(512),
+    text character varying(4096),
+    title_vector vector(1536),
+    content_vector vector(1536),
+    vector_id int
+);
+
+ALTER TABLE IF EXISTS public.wikipedia
+    OWNER to sa;
+	
+	
+COPY wikipedia FROM '/MyGitHub/openai-cookbook-python/examples/data/vector_database_wikipedia_articles_embedded.csv' DELIMITER ',' CSV HEADER;
+	
+```
+
 # pgvector
 
 Open-source vector similarity search for Postgres

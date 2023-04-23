@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NRediSearch" Version="2.2.79" />
+    <PackageReference Include="RediSearchClient" Version="1.2.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.6.104" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\pgvector-dotNET\pgvector-dotNET.csproj" />
   </ItemGroup>
 

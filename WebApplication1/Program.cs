@@ -29,6 +29,17 @@ app
             }
         )
     .WithName("pgsql");
+app
+    .MapGet
+        (
+              "/wikipedia"
+            , async () =>
+            {
+                await new TestContext().ProcessAsync2();
+                return "ok";
+            }
+        )
+    .WithName("wikipedia");
 
 app.Run();
 
