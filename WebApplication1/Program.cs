@@ -24,7 +24,7 @@ app
               "/pgsql"
             , async () =>
             {
-                await new TestContext().ProcessAsync();
+                await new TestContext().PostgreSQLProcessAsync();
                 return "ok";
             }
         )
@@ -35,7 +35,7 @@ app
               "/wikipedia"
             , async () =>
             {
-                await new TestContext().ProcessAsync2();
+                await new TestContext().WikipediaPostgreSQLProcessAsync();
                 return "ok";
             }
         )

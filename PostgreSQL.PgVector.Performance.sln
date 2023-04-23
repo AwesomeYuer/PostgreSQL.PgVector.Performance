@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSQL.PgVector.Performance", "PostgreSQL.PgVector.Performance\PostgreSQL.PgVector.Performance.csproj", "{5AFF6318-9125-4A9A-95B1-728BDD8AA4F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostgreSQL.PgVector.Performance", "PostgreSQL.PgVector.Performance\PostgreSQL.PgVector.Performance.csproj", "{5AFF6318-9125-4A9A-95B1-728BDD8AA4F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportTools", "ImportTools\ImportTools.csproj", "{FCB77EE8-880A-4907-AA0C-04DBE6B25F6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportTools", "ImportTools\ImportTools.csproj", "{FCB77EE8-880A-4907-AA0C-04DBE6B25F6A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pgvector-dotNET", "pgvector-dotNET\pgvector-dotNET.csproj", "{67BA99FC-D080-4106-81F0-3E42DC2A1D35}"
 EndProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Sol
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C468CA4E-1B6C-4FBB-867D-35AB15838BE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C468CA4E-1B6C-4FBB-867D-35AB15838BE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

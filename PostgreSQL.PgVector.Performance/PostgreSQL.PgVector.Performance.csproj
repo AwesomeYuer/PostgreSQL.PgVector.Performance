@@ -9,10 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
+    <PackageReference Include="NRedisStack" Version="0.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\pgvector-dotNET\pgvector-dotNET.csproj" />
+    <!--<ProjectReference Include="..\StackExchange.Redis\StackExchange.Redis.csproj" />-->
   </ItemGroup>
 
 </Project>

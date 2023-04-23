@@ -4,13 +4,22 @@ using Pgvector;
 using Pgvector.Npgsql;
 using System.Data;
 using System.Data.Common;
+using StackExchange.Redis;
+
+using NRedisStack;
+using NRedisStack.RedisStackCommands;
+using NRedisStack.Search;
+using NRedisStack.Search.Literals.Enums;
+using NRedisStack.Search.Aggregation;
+
+
 
 namespace PostgreSQL.PgVector.Performance;
 
 public class TestContext
 {
     [Benchmark]
-    public async Task ProcessAsync()
+    public async Task PostgreSQLProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.ConnectionString);
         dataSourceBuilder.UseVector();
@@ -97,7 +106,7 @@ LIMIT $2;
 
 
     [Benchmark]
-    public async Task ProcessAsync2()
+    public async Task WikipediaPostgreSQLProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.ConnectionString);
         dataSourceBuilder.UseVector();
@@ -180,5 +189,104 @@ LIMIT $2;
             // return to connection pool
             await connection.CloseAsync();
         }
+    }
+
+
+
+    [Benchmark]
+    public async Task WikipediaRediSearchProcessAsync()
+    {
+        // https://redis.io/docs/stack/search/reference/vectors/
+        await Task.CompletedTask;
+
+        var floats = new float[1536]
+                                .Select
+                                    (
+                                        (x) =>
+                                        {
+                                            return
+                                                new Random()
+                                                        .NextSingle();
+                                        }
+                                    )
+                                .ToArray();
+
+
+        
+
+        var vectors = floats
+                            .Select
+                                (
+                                    (x) =>
+                                    {
+                                        return
+                                            new Random()
+                                                    .NextSingle();
+                                    }
+                                )
+                            .SelectMany
+                                (
+                                    (x) =>
+                                    {
+                                        return
+                                            BitConverter
+                                                .GetBytes(x);
+                                    }
+                                )
+                            .ToArray();
+
+        var vectorsHexString =
+                    vectors
+                        .Select
+                            (
+                                (x) =>
+                                {
+                                    return
+                                        $@"\x{x:X2}";
+                                }
+                            )
+                        .Aggregate
+                            (
+                                (x, y) =>
+                                {
+                                    return
+                                        $"{x}{y}";
+                                }
+                            );
+        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("dev-001.eastasia.cloudapp.azure.com, password=p@$$w0rdw!th0ut");
+        IDatabase db = redis.GetDatabase();
+        int radius = 80;
+        var indexName = "embeddings-index";
+        var query = $"*=>[KNN {radius} @title_vector ${nameof(vectors)} AS vector_score]";
+        SearchCommands ftSearcher = db.FT();
+        //var ftSearch = $@"FT.SEARCH {indexName} ""{query}"" PARAMS 2 {nameof(vectors)} ""{vectorsHexString}"" return 1 title";
+        var searchResult =
+                await
+                    ftSearcher
+                            .SearchAsync
+                                (
+                                    indexName
+                                    , new Query(query)
+                                            .AddParam
+                                                (
+                                                     nameof(vectors)
+                                                    , vectors
+                                                )
+                                            .SetSortBy("vector_score")
+                                            .Dialect(2)
+                                );
+        var documents = searchResult.Documents;
+        foreach (var document in documents)
+        {
+            var keyValuePairs = document.GetProperties();
+            foreach (var keyValuePair in keyValuePairs)
+            {
+                if (keyValuePair.Key == "vector_score")
+                {
+                    Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
+                }
+            }
+        }
+        await redis.CloseAsync();
     }
 }

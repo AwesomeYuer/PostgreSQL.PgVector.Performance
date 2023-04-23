@@ -20,8 +20,8 @@ public class Program
         //GlobalManager.ConnectionString = string.Format(GlobalManager.ConnectionString, args[0]);
         //Thread.Sleep(5 * 1000);
 
-        //new Program().ProcessAsync().Wait();
-        _ = BenchmarkRunner.Run<TestContext>();
+        new TestContext().WikipediaRediSearchProcessAsync().Wait();
+        //_ = BenchmarkRunner.Run<TestContext>();
         Console.ReadLine();
     }
     
