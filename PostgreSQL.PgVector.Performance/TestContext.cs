@@ -197,8 +197,6 @@ LIMIT $2;
     public async Task WikipediaRediSearchProcessAsync()
     {
         // https://redis.io/docs/stack/search/reference/vectors/
-        await Task.CompletedTask;
-
         var floats = new float[1536]
                                 .Select
                                     (
@@ -209,21 +207,9 @@ LIMIT $2;
                                                         .NextSingle();
                                         }
                                     )
-                                .ToArray();
-
-
-        
-
+                                //.ToArray()
+                                    ;
         var vectors = floats
-                            .Select
-                                (
-                                    (x) =>
-                                    {
-                                        return
-                                            new Random()
-                                                    .NextSingle();
-                                    }
-                                )
                             .SelectMany
                                 (
                                     (x) =>
@@ -235,24 +221,24 @@ LIMIT $2;
                                 )
                             .ToArray();
 
-        var vectorsHexString =
-                    vectors
-                        .Select
-                            (
-                                (x) =>
-                                {
-                                    return
-                                        $@"\x{x:X2}";
-                                }
-                            )
-                        .Aggregate
-                            (
-                                (x, y) =>
-                                {
-                                    return
-                                        $"{x}{y}";
-                                }
-                            );
+        //var vectorsHexString =
+        //            vectors
+        //                .Select
+        //                    (
+        //                        (x) =>
+        //                        {
+        //                            return
+        //                                $@"\x{x:X2}";
+        //                        }
+        //                    )
+        //                .Aggregate
+        //                    (
+        //                        (x, y) =>
+        //                        {
+        //                            return
+        //                                $"{x}{y}";
+        //                        }
+        //                    );
         using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("dev-001.eastasia.cloudapp.azure.com, password=p@$$w0rdw!th0ut");
         IDatabase db = redis.GetDatabase();
         int radius = 80;
@@ -267,13 +253,13 @@ LIMIT $2;
                                 (
                                     indexName
                                     , new Query(query)
-                                            .AddParam
-                                                (
-                                                     nameof(vectors)
-                                                    , vectors
-                                                )
-                                            .SetSortBy("vector_score")
-                                            .Dialect(2)
+                                                .AddParam
+                                                    (
+                                                         nameof(vectors)
+                                                        , vectors
+                                                    )
+                                                .SetSortBy("vector_score")
+                                                .Dialect(2)
                                 );
         var documents = searchResult.Documents;
         foreach (var document in documents)
