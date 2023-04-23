@@ -239,9 +239,9 @@ LIMIT $2;
         //                                $"{x}{y}";
         //                        }
         //                    );
-        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("dev-001.eastasia.cloudapp.azure.com, password=p@$$w0rdw!th0ut");
+        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost, password=p@$$w0rdw!th0ut");
         IDatabase db = redis.GetDatabase();
-        int radius = 80;
+        int radius = 10;
         var indexName = "embeddings-index";
         var query = $"*=>[KNN {radius} @title_vector ${nameof(vectors)} AS vector_score]";
         SearchCommands ftSearcher = db.FT();
@@ -259,7 +259,8 @@ LIMIT $2;
                                                         , vectors
                                                     )
                                                 .SetSortBy("vector_score")
-                                                .Dialect(2)
+                                                .Limit(0, 20)
+                                                //.Dialect(2)
                                 );
         var documents = searchResult.Documents;
         foreach (var document in documents)

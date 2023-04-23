@@ -27,19 +27,30 @@ app
                 await new TestContext().PostgreSQLProcessAsync();
                 return "ok";
             }
-        )
-    .WithName("pgsql");
+        );
+    
 app
     .MapGet
         (
-              "/wikipedia"
+              "/wikipedia/pgvector"
             , async () =>
             {
                 await new TestContext().WikipediaPostgreSQLProcessAsync();
-                return "ok";
+                return "pgvector";
             }
-        )
-    .WithName("wikipedia");
+        );
+
+app
+    .MapGet
+        (
+              "/wikipedia/redisearch"
+            , async () =>
+            {
+                await new TestContext().WikipediaRediSearchProcessAsync();
+                return "redisearch";
+            }
+        );
+
 
 app.Run();
 
