@@ -1,3 +1,13 @@
+# Docker Run `PostgreSQL` Database Server
+```
+docker pull ankane/pgvector
+
+
+docker run --name test-pgvector -v ~/temp:/share -e POSTGRES_PASSWORD=password01! -d -p 5432:5432 ankane/pgvector
+
+```
+
+
 ```sql
 
 -- Database: pgvectors
