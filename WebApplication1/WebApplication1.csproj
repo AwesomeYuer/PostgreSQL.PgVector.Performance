@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PostgreSQL.PgVector.Performance\PostgreSQL.PgVector.Performance.csproj" />
+    <ProjectReference Include="..\VectorDataBase.Performance\VectorDataBase.Performance.csproj" />
   </ItemGroup>
 
 </Project>

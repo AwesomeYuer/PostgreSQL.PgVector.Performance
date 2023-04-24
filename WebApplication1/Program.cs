@@ -1,4 +1,4 @@
-using PostgreSQL.PgVector.Performance;
+using VectorDataBase.Performance;
 
 var builder = WebApplication.CreateBuilder(args);
 

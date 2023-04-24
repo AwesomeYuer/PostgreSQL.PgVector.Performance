@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "ImportTools": {
-      "commandName": "Project",
-      "commandLineArgs": "!@#123QWE 11 a.txt"
-    }
-  }
-}

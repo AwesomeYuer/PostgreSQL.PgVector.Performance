@@ -1,4 +1,3 @@
-using System.Numerics;
 namespace Pgvector;
 
 public partial class Vector : IEquatable<Vector>
