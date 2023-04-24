@@ -246,11 +246,11 @@ LIMIT $2;
         //                                $"{x}{y}";
         //                        }
         //                    );
-        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(GlobalManager.SelfHostRedisConnectionString);
+        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(connectionString);
         IDatabase db = redis.GetDatabase();
-        int radius = 80;
+        int k = 20;
         var indexName = "embeddings-index";
-        var query = $"*=>[KNN {radius} @title_vector ${nameof(vectors)} AS vector_score]";
+        var query = $"*=>[KNN {k} @title_vector ${nameof(vectors)} AS vector_score]";
         SearchCommands ftSearcher = db.FT();
         //var ftSearch = $@"FT.SEARCH {indexName} ""{query}"" PARAMS 2 {nameof(vectors)} ""{vectorsHexString}"" return 1 title";
         var searchResult =
@@ -266,7 +266,7 @@ LIMIT $2;
                                                     , vectors
                                                 )
                                             .SetSortBy("vector_score")
-                                            .Limit(0, 20)
+                                            .Limit(0, k)
                                             .Dialect(2)
                                 );
         var documents = searchResult.Documents;
@@ -277,7 +277,7 @@ LIMIT $2;
             {
                 if (keyValuePair.Key == "vector_score")
                 {
-                    //Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
+                    Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
                 }
             }
         }
