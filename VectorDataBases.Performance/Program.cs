@@ -4,13 +4,10 @@ using VectorDataBases.Performance;
 
 public class Program
 {
-    
     public static void Main(string[] args)
     {
         Console.WriteLine("Hello, World!");
         //GlobalManager.ConnectionString = string.Format(GlobalManager.ConnectionString, args[0]);
-        //Thread.Sleep(5 * 1000);
-
         //new TestContext().WikipediaRediSearchProcessAsync().Wait();
         _ = BenchmarkRunner.Run<TestContext>();
         Console.ReadLine();
