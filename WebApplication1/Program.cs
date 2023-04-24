@@ -43,11 +43,22 @@ app
 app
     .MapGet
         (
-              "/wikipedia/redisearch"
+              "/wikipedia/redisearch-selfhost"
             , async () =>
             {
-                //await new TestContext().WikipediaRediSearch_25k_ProcessAsync();
-                return "redisearch";
+                await new TestContext().WikipediaSelfHostRediSearch_25k_ProcessAsync();
+                return "redisearch-selfhost";
+            }
+        );
+
+app
+    .MapGet
+        (
+              "/wikipedia/redisearch-azure"
+            , async () =>
+            {
+                await new TestContext().WikipediaAzureRediSearch_25k_ProcessAsync();
+                return "redisearch-azure";
             }
         );
 

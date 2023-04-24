@@ -201,7 +201,7 @@ LIMIT $2;
     private async Task WikipediaRediSearch_25k_ProcessAsync(string connectionString)
     {
         // https://redis.io/docs/stack/search/reference/vectors/
-        await Task.CompletedTask;
+        //await Task.CompletedTask;
 
         var floats = new float[1536]
                                 .Select
@@ -213,51 +213,40 @@ LIMIT $2;
                                                         .NextSingle();
                                         }
                                     )
-                                .ToArray();
-
-
-
+                                //.ToArray()
+                                ;
 
         var vectors = floats
-                            .Select
-                                (
-                                    (x) =>
-                                    {
-                                        return
-                                            new Random()
-                                                    .NextSingle();
-                                    }
-                                )
                             .SelectMany
                                 (
                                     (x) =>
                                     {
                                         return
                                             BitConverter
-                                                .GetBytes(x);
+                                                    .GetBytes(x);
                                     }
                                 )
                             .ToArray();
 
-        var vectorsHexString =
-                    vectors
-                        .Select
-                            (
-                                (x) =>
-                                {
-                                    return
-                                        $@"\x{x:X2}";
-                                }
-                            )
-                        .Aggregate
-                            (
-                                (x, y) =>
-                                {
-                                    return
-                                        $"{x}{y}";
-                                }
-                            );
-        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("dev-001.eastasia.cloudapp.azure.com, password=p@$$w0rdwith0ut");
+        //var vectorsHexString =
+        //            vectors
+        //                .Select
+        //                    (
+        //                        (x) =>
+        //                        {
+        //                            return
+        //                                $@"\x{x:X2}";
+        //                        }
+        //                    )
+        //                .Aggregate
+        //                    (
+        //                        (x, y) =>
+        //                        {
+        //                            return
+        //                                $"{x}{y}";
+        //                        }
+        //                    );
+        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(GlobalManager.SelfHostRedisConnectionString);
         IDatabase db = redis.GetDatabase();
         int radius = 80;
         var indexName = "embeddings-index";
@@ -277,6 +266,7 @@ LIMIT $2;
                                                     , vectors
                                                 )
                                             .SetSortBy("vector_score")
+                                            .Limit(0, 20)
                                             .Dialect(2)
                                 );
         var documents = searchResult.Documents;
