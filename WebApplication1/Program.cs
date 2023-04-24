@@ -35,7 +35,7 @@ app
               "/wikipedia/pgvector"
             , async () =>
             {
-                await new TestContext().WikipediaPostgreSQL_1w_ProcessAsync();
+                await new TestContext().WikipediaPostgreSQL_25k_ProcessAsync();
                 return "pgvector";
             }
         );
@@ -46,7 +46,7 @@ app
               "/wikipedia/redisearch"
             , async () =>
             {
-                await new TestContext().WikipediaRediSearch_1w_ProcessAsync();
+                //await new TestContext().WikipediaRediSearch_25k_ProcessAsync();
                 return "redisearch";
             }
         );

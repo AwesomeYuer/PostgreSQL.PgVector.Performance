@@ -8,8 +8,8 @@ public class Program
     {
         Console.WriteLine("Hello, World!");
         //GlobalManager.ConnectionString = string.Format(GlobalManager.ConnectionString, args[0]);
-        //new TestContext().WikipediaRediSearchProcessAsync().Wait();
-        _ = BenchmarkRunner.Run<TestContext>();
+        new TestContext().WikipediaSelfHostRediSearch_25k_ProcessAsync().Wait();
+        //_ = BenchmarkRunner.Run<TestContext>();
         Console.ReadLine();
     }
     

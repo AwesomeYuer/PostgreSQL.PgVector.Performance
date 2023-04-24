@@ -101,7 +101,7 @@ LIMIT $2;
 
 
     [Benchmark]
-    public async Task WikipediaPostgreSQL_1w_ProcessAsync()
+    public async Task WikipediaPostgreSQL_25k_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
@@ -186,9 +186,23 @@ LIMIT $2;
     }
 
     [Benchmark]
-    public async Task WikipediaRediSearch_1w_ProcessAsync()
+    public async Task WikipediaAzureRediSearch_25k_ProcessAsync()
+    {
+        await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
+    }
+
+    [Benchmark]
+    public async Task WikipediaSelfHostRediSearch_25k_ProcessAsync()
+    {
+        await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
+    }
+
+    //[Benchmark]
+    private async Task WikipediaRediSearch_25k_ProcessAsync(string connectionString)
     {
         // https://redis.io/docs/stack/search/reference/vectors/
+        await Task.CompletedTask;
+
         var floats = new float[1536]
                                 .Select
                                     (
@@ -199,9 +213,21 @@ LIMIT $2;
                                                         .NextSingle();
                                         }
                                     )
-                                //.ToArray()
-                                    ;
+                                .ToArray();
+
+
+
+
         var vectors = floats
+                            .Select
+                                (
+                                    (x) =>
+                                    {
+                                        return
+                                            new Random()
+                                                    .NextSingle();
+                                    }
+                                )
                             .SelectMany
                                 (
                                     (x) =>
@@ -213,27 +239,27 @@ LIMIT $2;
                                 )
                             .ToArray();
 
-        //var vectorsHexString =
-        //            vectors
-        //                .Select
-        //                    (
-        //                        (x) =>
-        //                        {
-        //                            return
-        //                                $@"\x{x:X2}";
-        //                        }
-        //                    )
-        //                .Aggregate
-        //                    (
-        //                        (x, y) =>
-        //                        {
-        //                            return
-        //                                $"{x}{y}";
-        //                        }
-        //                    );
-        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(GlobalManager.redisConnectionString);
+        var vectorsHexString =
+                    vectors
+                        .Select
+                            (
+                                (x) =>
+                                {
+                                    return
+                                        $@"\x{x:X2}";
+                                }
+                            )
+                        .Aggregate
+                            (
+                                (x, y) =>
+                                {
+                                    return
+                                        $"{x}{y}";
+                                }
+                            );
+        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("dev-001.eastasia.cloudapp.azure.com, password=p@$$w0rdwith0ut");
         IDatabase db = redis.GetDatabase();
-        int radius = 10;
+        int radius = 80;
         var indexName = "embeddings-index";
         var query = $"*=>[KNN {radius} @title_vector ${nameof(vectors)} AS vector_score]";
         SearchCommands ftSearcher = db.FT();
@@ -243,16 +269,15 @@ LIMIT $2;
                     ftSearcher
                             .SearchAsync
                                 (
-                                      indexName
+                                    indexName
                                     , new Query(query)
-                                                .AddParam
-                                                    (
-                                                         nameof(vectors)
-                                                        , vectors
-                                                    )
-                                                .SetSortBy("vector_score")
-                                                .Limit(0, 20)
-                                                //.Dialect(2)
+                                            .AddParam
+                                                (
+                                                     nameof(vectors)
+                                                    , vectors
+                                                )
+                                            .SetSortBy("vector_score")
+                                            .Dialect(2)
                                 );
         var documents = searchResult.Documents;
         foreach (var document in documents)
@@ -262,7 +287,7 @@ LIMIT $2;
             {
                 if (keyValuePair.Key == "vector_score")
                 {
-                    //Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
+                    Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
                 }
             }
         }
