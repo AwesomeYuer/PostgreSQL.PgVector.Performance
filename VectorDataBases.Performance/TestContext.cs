@@ -14,7 +14,7 @@ namespace VectorDataBases.Performance;
 public class TestContext
 {
     [Benchmark]
-    public async Task PostgreSQLProcessAsync()
+    public async Task PostgreSQL_11w_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
@@ -101,7 +101,7 @@ LIMIT $2;
 
 
     [Benchmark]
-    public async Task WikipediaPostgreSQLProcessAsync()
+    public async Task WikipediaPostgreSQL_1w_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
@@ -186,7 +186,7 @@ LIMIT $2;
     }
 
     [Benchmark]
-    public async Task WikipediaRediSearchProcessAsync()
+    public async Task WikipediaRediSearch_1w_ProcessAsync()
     {
         // https://redis.io/docs/stack/search/reference/vectors/
         var floats = new float[1536]
