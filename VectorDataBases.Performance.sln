@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebAppli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportToPostgreSQL.Tools", "ImportToPostgreSQL.Tools\ImportToPostgreSQL.Tools.csproj", "{E5FD9C45-5E32-4EA2-B677-F6B379A8DCFE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorDataBase.Performance", "VectorDataBase.Performance\VectorDataBase.Performance.csproj", "{F38E86EB-63A7-4E29-9445-440D766DB32A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorDataBases.Performance", "VectorDataBases.Performance\VectorDataBases.Performance.csproj", "{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +36,10 @@ Global
 		{E5FD9C45-5E32-4EA2-B677-F6B379A8DCFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5FD9C45-5E32-4EA2-B677-F6B379A8DCFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5FD9C45-5E32-4EA2-B677-F6B379A8DCFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F38E86EB-63A7-4E29-9445-440D766DB32A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F38E86EB-63A7-4E29-9445-440D766DB32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F38E86EB-63A7-4E29-9445-440D766DB32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F38E86EB-63A7-4E29-9445-440D766DB32A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

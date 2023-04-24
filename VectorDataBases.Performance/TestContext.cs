@@ -9,7 +9,7 @@ using System.Data;
 using System.Data.Common;
 using Pgvector;
 
-namespace VectorDataBase.Performance;
+namespace VectorDataBases.Performance;
 
 public class TestContext
 {

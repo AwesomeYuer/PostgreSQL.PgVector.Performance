@@ -1,4 +1,4 @@
-using VectorDataBase.Performance;
+using VectorDataBases.Performance;
 
 var builder = WebApplication.CreateBuilder(args);
 

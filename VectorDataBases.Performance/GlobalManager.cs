@@ -1,4 +1,4 @@
-﻿namespace VectorDataBase.Performance;
+﻿namespace VectorDataBases.Performance;
 
 public static class GlobalManager
 {

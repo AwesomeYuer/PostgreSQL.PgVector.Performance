@@ -1,5 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using VectorDataBase.Performance;
+using VectorDataBases.Performance;
 
 public class Program
 {
