@@ -191,7 +191,7 @@ LIMIT $2;
         await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
     }
 
-    //[Benchmark]
+    //1[Benchmark]
     public async Task WikipediaSelfHostRediSearch_25k_ProcessAsync()
     {
         await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
