@@ -277,7 +277,7 @@ LIMIT $2;
             {
                 if (keyValuePair.Key == "vector_score")
                 {
-                    Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
+                    //Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
                 }
             }
         }
