@@ -100,7 +100,7 @@ LIMIT $2;
     }
 
 
-    // [Benchmark]
+    [Benchmark]
     public async Task WikipediaPostgreSQL_25k_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
@@ -185,7 +185,7 @@ LIMIT $2;
         }
     }
 
-    //[Benchmark]
+    [Benchmark]
     public async Task WikipediaAzureRediSearch_25k_ProcessAsync()
     {
         await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
@@ -197,7 +197,6 @@ LIMIT $2;
         await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
     }
 
-    //[Benchmark]
     private async Task WikipediaRediSearch_25k_ProcessAsync(string connectionString)
     {
         // https://redis.io/docs/stack/search/reference/vectors/
