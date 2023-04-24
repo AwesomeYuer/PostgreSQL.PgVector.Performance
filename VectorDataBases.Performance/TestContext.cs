@@ -100,7 +100,7 @@ LIMIT $2;
     }
 
 
-    [Benchmark]
+    // [Benchmark]
     public async Task WikipediaPostgreSQL_25k_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
