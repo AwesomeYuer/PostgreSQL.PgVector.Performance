@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using BenchmarkDotNet.Running;
 using VectorDataBases.Performance;
 
 public class Program
@@ -10,8 +11,8 @@ public class Program
         //GlobalManager.ConnectionString = string.Format(GlobalManager.ConnectionString, args[0]);
         //Thread.Sleep(5 * 1000);
 
-        new TestContext().WikipediaRediSearchProcessAsync().Wait();
-        //_ = BenchmarkRunner.Run<TestContext>();
+        //new TestContext().WikipediaRediSearchProcessAsync().Wait();
+        _ = BenchmarkRunner.Run<TestContext>();
         Console.ReadLine();
     }
     
