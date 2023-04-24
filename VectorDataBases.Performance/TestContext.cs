@@ -185,8 +185,6 @@ LIMIT $2;
         }
     }
 
-
-
     [Benchmark]
     public async Task WikipediaRediSearchProcessAsync()
     {
