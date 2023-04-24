@@ -31,7 +31,7 @@ create extension vector;
 -- Table: public.embeddings
 
 -- DROP TABLE IF EXISTS public.embeddings;
-
+-- 11w rows
 CREATE TABLE IF NOT EXISTS public.embeddings
 (
     id bigserial,
@@ -44,27 +44,27 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.embeddings
     OWNER to sa;
--- Index: idx_ivfflat_vector_cosine_ops
+-- Index: idx_ivfflat_vector_cosine_ops_on_embeddings
 
--- DROP INDEX IF EXISTS public.idx_ivfflat_vector_cosine_ops;
+-- DROP INDEX IF EXISTS public.idx_ivfflat_vector_cosine_ops_on_embeddings;
 
-CREATE INDEX IF NOT EXISTS idx_ivfflat_vector_cosine_ops
+CREATE INDEX IF NOT EXISTS idx_ivfflat_vector_cosine_ops_on_embeddings
     ON public.embeddings USING ivfflat
     (embedding vector_cosine_ops)
     TABLESPACE pg_default;
--- Index: idx_ivfflat_vector_ip_ops
+-- Index: idx_ivfflat_vector_ip_ops_on_embeddings
 
--- DROP INDEX IF EXISTS public.idx_ivfflat_vector_ip_ops;
+-- DROP INDEX IF EXISTS public.idx_ivfflat_vector_ip_ops_on_embeddings;
 
-CREATE INDEX IF NOT EXISTS idx_ivfflat_vector_ip_ops
+CREATE INDEX IF NOT EXISTS idx_ivfflat_vector_ip_ops_on_embeddings
     ON public.embeddings USING ivfflat
     (embedding vector_ip_ops)
     TABLESPACE pg_default;
--- Index: idx_ivfflat_vector_l2_ops
+-- Index: idx_ivfflat_vector_l2_ops_on_embeddings
 
--- DROP INDEX IF EXISTS public.idx_ivfflat_vector_l2_ops;
+-- DROP INDEX IF EXISTS public.idx_ivfflat_vector_l2_ops_on_embeddings;
 
-CREATE INDEX IF NOT EXISTS idx_ivfflat_vector_l2_ops
+CREATE INDEX IF NOT EXISTS idx_ivfflat_vector_l2_ops_on_embeddings
     ON public.embeddings USING ivfflat
     (embedding)
     TABLESPACE pg_default;

@@ -185,13 +185,13 @@ LIMIT $2;
         }
     }
 
-    [Benchmark]
+    //[Benchmark]
     public async Task WikipediaAzureRediSearch_25k_ProcessAsync()
     {
         await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
     }
 
-    [Benchmark]
+    //[Benchmark]
     public async Task WikipediaSelfHostRediSearch_25k_ProcessAsync()
     {
         await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
