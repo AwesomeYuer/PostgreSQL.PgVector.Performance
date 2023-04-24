@@ -21,44 +21,44 @@ if (app.Environment.IsDevelopment())
 app
     .MapGet
         (
-              "/pgsql"
+              "/pgsql-11w"
             , async () =>
             {
                 await new TestContext().PostgreSQL_11w_ProcessAsync();
-                return "ok";
+                return "pgsql-11w";
             }
         );
     
 app
     .MapGet
         (
-              "/wikipedia/pgvector"
+              "/wikipedia/pgvector-25k"
             , async () =>
             {
                 await new TestContext().WikipediaPostgreSQL_25k_ProcessAsync();
-                return "pgvector";
+                return "pgvector-25k";
             }
         );
 
 app
     .MapGet
         (
-              "/wikipedia/redisearch-selfhost"
+              "/wikipedia/redisearch-selfhost-25k"
             , async () =>
             {
                 await new TestContext().WikipediaSelfHostRediSearch_25k_ProcessAsync();
-                return "redisearch-selfhost";
+                return "redisearch-selfhost-25k";
             }
         );
 
 app
     .MapGet
         (
-              "/wikipedia/redisearch-azure"
+              "/wikipedia/redisearch-azure-25k"
             , async () =>
             {
                 await new TestContext().WikipediaAzureRediSearch_25k_ProcessAsync();
-                return "redisearch-azure";
+                return "redisearch-azure-25k";
             }
         );
 
