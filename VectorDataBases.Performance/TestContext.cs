@@ -119,9 +119,8 @@ LIMIT $2;
                                         (x) =>
                                         {
                                             return
-                                                (float)
-                                                    new Random()
-                                                            .NextDouble();
+                                                new Random()
+                                                        .NextSingle();
                                         }
                                     )
                                 .ToArray();
