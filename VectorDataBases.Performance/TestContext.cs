@@ -48,10 +48,12 @@ AS
 (
     SELECT
         *
-        , embedding <-> $1::vector  as ""EuclideanL2Distance""
         , embedding <=> $1::vector  as ""CosineDistance""
     FROM
         embeddings AS a
+    ORDER BY
+        ""CosineDistance""
+    LIMIT $2
 )
 SELECT
     *
@@ -59,11 +61,9 @@ SELECT
 FROM
     T AS a
 ORDER BY
-    --""EuclideanL2Distance""
-    ""CosineDistance"" 
-    --""CosineSimilarity""
-                --DESC
-LIMIT $2;
+    ""CosineSimilarity""
+                    DESC
+
 ";
             using var npgsqlCommand = new NpgsqlCommand();
             npgsqlCommand.Connection = connection;
@@ -134,10 +134,12 @@ AS
 (
     SELECT
         *
-        , title_vector <-> $1::vector  as ""EuclideanL2Distance""
         , title_vector <=> $1::vector  as ""CosineDistance""
     FROM
         wikipedia AS a
+    ORDER BY
+        ""CosineDistance""
+    LIMIT $2
 )
 SELECT
     *
@@ -145,11 +147,8 @@ SELECT
 FROM
     T AS a
 ORDER BY
-    --""EuclideanL2Distance""
-    ""CosineDistance"" 
-    --""CosineSimilarity""
-                --DESC
-LIMIT $2;
+    ""CosineSimilarity""
+                DESC
 ";
             using var npgsqlCommand = new NpgsqlCommand();
             npgsqlCommand.Connection = connection;
