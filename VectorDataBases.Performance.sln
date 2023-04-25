@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10.pgvector-dotNET", "10.pg
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Solution Items", "{8E70650A-C449-4904-89A4-ABA887A50B90}"
 	ProjectSection(SolutionItems) = preProject
+		manual.md = manual.md
 		readme.md = readme.md
 	EndProjectSection
 EndProject
