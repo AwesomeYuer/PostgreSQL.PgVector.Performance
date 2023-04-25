@@ -146,9 +146,28 @@ wget https://cdn.openai.com/API/examples/data/vector_database_wikipedia_articles
 # PostgresSQL + PgVector + Docker
 # ssh
 ```sh
+
 docker pull ankane/pgvector
 
 docker run --name test-pgvector -v ~/temp:/share -e POSTGRES_PASSWORD=password01! -d -p 5432:5432 ankane/pgvector
+
+```
+
+# 压测控制台
+```
+sudo docker pull ikende/beetlex_webapi_benchmark:v0.8.6
+
+
+
+```
+
+
+# 测试过程中的性能监控
+```sh
+# 本地监控
+sudo docker stats
+
+# 远程监控
 
 
 ```
