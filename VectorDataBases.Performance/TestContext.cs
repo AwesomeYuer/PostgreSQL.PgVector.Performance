@@ -134,7 +134,7 @@ AS
 (
     SELECT
         *
-        , title_vector <-> $1::vector  as ""EuclideanL2Distance""
+        --, title_vector <-> $1::vector  as ""EuclideanL2Distance""
         , title_vector <=> $1::vector  as ""CosineDistance""
     FROM
         wikipedia AS a
