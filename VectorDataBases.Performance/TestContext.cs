@@ -48,8 +48,8 @@ public class TestContext
 --(
     SELECT
         *
-        --, embedding <-> $1::vector  as ""EuclideanL2Distance""
-        , cosine_distance(embedding, $1::vector)  as ""CosineDistance""
+        , embedding <-> $1::vector  as ""EuclideanL2Distance""
+        --, cosine_distance(embedding, $1::vector)  as ""CosineDistance""
     FROM
         embeddings AS a
 --)
@@ -59,8 +59,8 @@ public class TestContext
 --FROM
 --    T AS a
 ORDER BY
-    --""EuclideanL2Distance""
-    ""CosineDistance"" 
+    ""EuclideanL2Distance""
+    --""CosineDistance"" 
     --""CosineSimilarity""
                 --DESC
 LIMIT $2;
