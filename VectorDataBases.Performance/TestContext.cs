@@ -42,25 +42,25 @@ public class TestContext
             var pgVector = new Vector(floats);
             var limit = 20;
             var sql = @$"
---WITH
---T
---AS
---(
+WITH
+T
+AS
+(
     SELECT
         *
         , embedding <-> $1::vector  as ""EuclideanL2Distance""
-        --, cosine_distance(embedding, $1::vector)  as ""CosineDistance""
+        , embedding <=> $1::vector  as ""CosineDistance""
     FROM
         embeddings AS a
---)
---SELECT
---    *
---    --, (1 - a.""CosineDistance"")    as ""CosineSimilarity""
---FROM
---    T AS a
+)
+SELECT
+    *
+    , (1 - a.""CosineDistance"")    as ""CosineSimilarity""
+FROM
+    T AS a
 ORDER BY
-    ""EuclideanL2Distance""
-    --""CosineDistance"" 
+    --""EuclideanL2Distance""
+    ""CosineDistance"" 
     --""CosineSimilarity""
                 --DESC
 LIMIT $2;
@@ -134,7 +134,7 @@ AS
 (
     SELECT
         *
-        --, title_vector <-> $1::vector  as ""EuclideanL2Distance""
+        , title_vector <-> $1::vector  as ""EuclideanL2Distance""
         , title_vector <=> $1::vector  as ""CosineDistance""
     FROM
         wikipedia AS a
@@ -185,7 +185,7 @@ LIMIT $2;
         }
     }
 
-    [Benchmark]
+    //[Benchmark]
     public async Task WikipediaAzureRediSearch_25k_ProcessAsync()
     {
         await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
