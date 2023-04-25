@@ -155,9 +155,10 @@ docker run --name test-pgvector -v ~/temp:/share -e POSTGRES_PASSWORD=password01
 
 # Ñ¹²â¿ØÖÆÌ¨
 ```
+
 sudo docker pull ikende/beetlex_webapi_benchmark:v0.8.6
 
-
+sudo docker run -d -p 9090:9090 ikende/beetlex_webapi_benchmark:v0.8.6
 
 ```
 
