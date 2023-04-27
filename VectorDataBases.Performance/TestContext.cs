@@ -15,7 +15,7 @@ namespace VectorDataBases.Performance;
 public class TestContext
 {
     [Benchmark]
-    public async Task PostgreSQL_11w_ProcessAsync()
+    public async Task PostgreSQL_ivfflat_vector_cosine_index_11w_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
