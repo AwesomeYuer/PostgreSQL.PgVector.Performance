@@ -252,19 +252,7 @@ ORDER BY
         
     }
 
-    //public async Task<SearchResult> RediSearch
-    //                (
-    //                    string redisConnectionString
-    //                    , string indexName
-    //                    , Query queryString
-    //                    , 
-    //                )
-    //{
-
-
-    //}
-
-
+    [Benchmark]
     public async Task VecSimRediSearch_HNSW_index_Cosine_225k_ProcessAsync()
     {
         // https://redis.io/docs/stack/search/reference/vectors/
