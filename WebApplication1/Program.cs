@@ -24,7 +24,7 @@ app
               "/pgsql-ivfflat-cosine-11w"
             , async () =>
             {
-                await new TestContext().PgVector_IvfflatVectorCosine_index_11w_ProcessAsync();
+                await new TestContext().PgVector_IvfflatVectorCosine_index_Cosine_11w_ProcessAsync();
                 return "pgsql-ivfflat-cosine-11w";
             }
         );
@@ -35,7 +35,7 @@ app
               "/pgsql-ivfflat-cosine-25k"
             , async () =>
             {
-                await new TestContext().PgVector_IvfflatVectorCosine_index_25k_ProcessAsync();
+                await new TestContext().PgVector_IvfflatVectorCosine_index_Cosine_25k_ProcessAsync();
                 return "pgsql-ivfflat-cosine-25k";
             }
         );

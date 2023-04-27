@@ -15,7 +15,7 @@ namespace VectorDataBases.Performance;
 public class TestContext
 {
     [Benchmark]
-    public async Task PgVector_IvfflatVectorCosine_index_11w_ProcessAsync()
+    public async Task PgVector_IvfflatVectorCosine_index_Cosine_11w_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
@@ -102,7 +102,7 @@ ORDER BY
 
 
     [Benchmark]
-    public async Task PgVector_IvfflatVectorCosine_index_25k_ProcessAsync()
+    public async Task PgVector_IvfflatVectorCosine_index_Cosine_25k_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
@@ -291,7 +291,7 @@ ORDER BY
                                     , vector
                                 )
                             .SetSortBy("score")
-                            .Limit(0, k)
+                            .Limit(0, 20)
                             .Dialect(2)
                             .FTSearchAsync
                                 (
@@ -308,7 +308,7 @@ ORDER BY
             {
                 if (keyValuePair.Key == "score")
                 {
-                    //Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
+                    // Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
                 }
             }
         }
