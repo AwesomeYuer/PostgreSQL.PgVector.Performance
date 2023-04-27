@@ -24,7 +24,7 @@ app
               "/pgsql-ivfflat-cosine-11w"
             , async () =>
             {
-                await new TestContext().PostgreSQL_ivfflat_vector_cosine_index_11w_ProcessAsync();
+                await new TestContext().PgVector_IvfflatVectorCosine_index_11w_ProcessAsync();
                 return "pgsql-ivfflat-cosine-11w";
             }
         );
@@ -35,7 +35,7 @@ app
               "/pgsql-ivfflat-cosine-25k"
             , async () =>
             {
-                await new TestContext().WikipediaPostgreSQL_ivfflat_vector_cosine_index_25k_ProcessAsync();
+                await new TestContext().PgVector_IvfflatVectorCosine_index_25k_ProcessAsync();
                 return "pgsql-ivfflat-cosine-25k";
             }
         );
@@ -46,7 +46,7 @@ app
               "/redisearch-selfhost-flat-cosine-25k"
             , async () =>
             {
-                await new TestContext().WikipediaSelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync();
+                await new TestContext().SelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync();
                 return "redisearch-selfhost-flat-cosine-25k";
             }
         );
@@ -56,7 +56,7 @@ app
               "/redisearch-azure-flat-cosine-25k"
             , async () =>
             {
-                await new TestContext().WikipediaAzureRediSearch_25k_ProcessAsync();
+                await new TestContext().AzureRediSearch_25k_ProcessAsync();
                 return "redisearch-azure-flat-cosine-25k";
             }
         );
@@ -67,7 +67,7 @@ app
               "/redisearch-selfhost-hnsw-cosine-225k"
             , async () =>
             {
-                await new TestContext().VecSimRediSearch_HNSW_index_Cosine_225k_ProcessAsync();
+                await new TestContext().RediSearch_HNSW_index_Cosine_225k_ProcessAsync();
                 return "redisearch-selfhost-hnsw-cosine-225k";
             }
         );

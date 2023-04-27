@@ -15,7 +15,7 @@ namespace VectorDataBases.Performance;
 public class TestContext
 {
     [Benchmark]
-    public async Task PostgreSQL_ivfflat_vector_cosine_index_11w_ProcessAsync()
+    public async Task PgVector_IvfflatVectorCosine_index_11w_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
@@ -102,7 +102,7 @@ ORDER BY
 
 
     [Benchmark]
-    public async Task WikipediaPostgreSQL_ivfflat_vector_cosine_index_25k_ProcessAsync()
+    public async Task PgVector_IvfflatVectorCosine_index_25k_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
@@ -186,18 +186,18 @@ ORDER BY
     }
 
     //[Benchmark]
-    public async Task WikipediaAzureRediSearch_25k_ProcessAsync()
+    public async Task AzureRediSearch_25k_ProcessAsync()
     {
-        await WikipediaRediSearch_FLAT_index_Cosine_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
+        await RediSearch_FLAT_index_Cosine_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
     }
 
     [Benchmark]
-    public async Task WikipediaSelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync()
+    public async Task SelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync()
     {
-        await WikipediaRediSearch_FLAT_index_Cosine_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
+        await RediSearch_FLAT_index_Cosine_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
     }
 
-    private async Task WikipediaRediSearch_FLAT_index_Cosine_25k_ProcessAsync(string connectionString)
+    private async Task RediSearch_FLAT_index_Cosine_25k_ProcessAsync(string connectionString)
     {
         // https://redis.io/docs/stack/search/reference/vectors/
         //await Task.CompletedTask;
@@ -253,7 +253,7 @@ ORDER BY
     }
 
     [Benchmark]
-    public async Task VecSimRediSearch_HNSW_index_Cosine_225k_ProcessAsync()
+    public async Task RediSearch_HNSW_index_Cosine_225k_ProcessAsync()
     {
         // https://redis.io/docs/stack/search/reference/vectors/
         //await Task.CompletedTask;
