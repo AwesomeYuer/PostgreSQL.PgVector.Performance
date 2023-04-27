@@ -8,12 +8,12 @@ namespace Microshaoft.RediSearch;
 public static class NRedisStackExtensions
 {
     public static Query AddArrayParameter<T>
-                (
-                    this Query @this
-                    , string parameterName
-                    , T[] parameter
-                )
-        where T : struct
+                            (
+                                this Query @this
+                                , string parameterName
+                                , T[] parameter
+                            )
+                                    where T : struct
     {
         byte[] bytes = MemoryMarshal.Cast<T, byte>(parameter).ToArray();
         @this.AddParam(parameterName, bytes);
