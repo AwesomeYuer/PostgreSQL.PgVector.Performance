@@ -35,7 +35,7 @@ app
               "/pgsql-ivfflat-cosine-25k"
             , async () =>
             {
-                await new TestContext().WikipediaPostgreSQL_ivfflat_vector_cosine_ops_index_25k_ProcessAsync();
+                await new TestContext().WikipediaPostgreSQL_ivfflat_vector_cosine_index_25k_ProcessAsync();
                 return "pgsql-ivfflat-cosine-25k";
             }
         );

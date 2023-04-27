@@ -102,7 +102,7 @@ ORDER BY
 
 
     [Benchmark]
-    public async Task WikipediaPostgreSQL_ivfflat_vector_cosine_ops_index_25k_ProcessAsync()
+    public async Task WikipediaPostgreSQL_ivfflat_vector_cosine_index_25k_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
@@ -289,7 +289,7 @@ ORDER BY
                         ;
 
         int k = 20;
-        var indexName = "vecsim-index";
+        var indexName = "hnsw-cosine-index-001";
         var queryString = $"*=>[KNN {k} @vector ${nameof(vector)} AS score]";
         var searchResult =
                 await
