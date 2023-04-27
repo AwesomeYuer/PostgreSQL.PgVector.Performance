@@ -308,7 +308,7 @@ ORDER BY
             {
                 if (keyValuePair.Key == "score")
                 {
-                    Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
+                    //Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
                 }
             }
         }
