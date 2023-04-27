@@ -24,7 +24,7 @@ app
               "/pgsql-ivfflat-cosine-11w"
             , async () =>
             {
-                await new TestContext().PostgreSQL_11w_ProcessAsync();
+                await new TestContext().PostgreSQL_ivfflat_vector_cosine_index_11w_ProcessAsync();
                 return "pgsql-ivfflat-cosine-11w";
             }
         );
