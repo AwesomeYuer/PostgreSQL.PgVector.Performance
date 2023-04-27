@@ -1,14 +1,12 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Microshaoft.RediSearch;
 using Npgsql;
 using NRedisStack;
-using NRedisStack.RedisStackCommands;
 using NRedisStack.Search;
+using Pgvector;
 using Pgvector.Npgsql;
-using StackExchange.Redis;
 using System.Data;
 using System.Data.Common;
-using Pgvector;
-using Microshaoft.RediSearch;
 
 namespace VectorDataBases.Performance;
 
@@ -17,7 +15,7 @@ public class TestContext
     [Benchmark]
     public async Task PgVector_IvfflatVectorCosine_index_Cosine_11w_ProcessAsync()
     {
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
+        var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.PostgreSQLConnectionString);
         dataSourceBuilder.UseVector();
 
         using var npgsqlDataSource = dataSourceBuilder.Build();
@@ -104,7 +102,7 @@ ORDER BY
     [Benchmark]
     public async Task PgVector_IvfflatVectorCosine_index_Cosine_25k_ProcessAsync()
     {
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
+        var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.PostgreSQLConnectionString);
         dataSourceBuilder.UseVector();
 
         using var npgsqlDataSource = dataSourceBuilder.Build();
@@ -249,7 +247,6 @@ ORDER BY
                 }
             }
         }
-        
     }
 
     [Benchmark]
