@@ -8,9 +8,10 @@ public class Program
     {
         Console.WriteLine("Hello, World!");
         //GlobalManager.ConnectionString = string.Format(GlobalManager.ConnectionString, args[0]);
-        //new TestContext().WikipediaSelfHostRediSearch_25k_ProcessAsync().Wait();
-        //new TestContext().WikipediaAzureRediSearch_25k_ProcessAsync().Wait();
-        _ = BenchmarkRunner.Run<TestContext>();
+        new TestContext().WikipediaPostgreSQL_ivfflat_vector_cosine_ops_index_25k_ProcessAsync().Wait();
+        //new TestContext().WikipediaSelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync().Wait();
+        new TestContext().VecSimRediSearch_HNSW_index_Cosine_225k_ProcessAsync().Wait();
+        //_ = BenchmarkRunner.Run<TestContext>();
         Console.ReadLine();
     }
     

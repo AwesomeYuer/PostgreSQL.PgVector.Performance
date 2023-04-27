@@ -97,7 +97,11 @@ cd openai-cookbook-python/examples/vector_databases/redis/
 
 sudo docker ps -a
 
+# docker compose:
 sudo docker-compose up -d
+
+# docker
+sudo docker run --name redisearch -v ~/temp:/share -d -p 6379:6379 redis/redis-stack
 
 sudo docker ps -a
 
@@ -149,7 +153,7 @@ wget https://cdn.openai.com/API/examples/data/vector_database_wikipedia_articles
 
 docker pull ankane/pgvector
 
-docker run --name test-pgvector -v ~/temp:/share -e POSTGRES_PASSWORD=password01! -d -p 5432:5432 ankane/pgvector
+docker run --name pgvector -v ~/temp:/share -e POSTGRES_PASSWORD=password01! -d -p 5432:5432 ankane/pgvector
 
 ```
 

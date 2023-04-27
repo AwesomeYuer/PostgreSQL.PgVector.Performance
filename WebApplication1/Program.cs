@@ -21,46 +21,58 @@ if (app.Environment.IsDevelopment())
 app
     .MapGet
         (
-              "/pgsql-11w"
+              "/pgsql-ivfflat-cosine-11w"
             , async () =>
             {
                 await new TestContext().PostgreSQL_11w_ProcessAsync();
-                return "pgsql-11w";
+                return "pgsql-ivfflat-cosine-11w";
             }
         );
     
 app
     .MapGet
         (
-              "/wikipedia/pgvector-25k"
+              "/pgsql-ivfflat-cosine-25k"
             , async () =>
             {
-                await new TestContext().WikipediaPostgreSQL_25k_ProcessAsync();
-                return "pgvector-25k";
+                await new TestContext().WikipediaPostgreSQL_ivfflat_vector_cosine_ops_index_25k_ProcessAsync();
+                return "pgsql-ivfflat-cosine-25k";
             }
         );
 
 app
     .MapGet
         (
-              "/wikipedia/redisearch-selfhost-25k"
+              "/redisearch-selfhost-flat-cosine-25k"
             , async () =>
             {
-                await new TestContext().WikipediaSelfHostRediSearch_25k_ProcessAsync();
-                return "redisearch-selfhost-25k";
+                await new TestContext().WikipediaSelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync();
+                return "redisearch-selfhost-flat-cosine-25k";
             }
         );
-
 app
     .MapGet
         (
-              "/wikipedia/redisearch-azure-25k"
+              "/redisearch-azure-flat-cosine-25k"
             , async () =>
             {
                 await new TestContext().WikipediaAzureRediSearch_25k_ProcessAsync();
-                return "redisearch-azure-25k";
+                return "redisearch-azure-flat-cosine-25k";
             }
         );
+
+app
+    .MapGet
+        (
+              "/redisearch-selfhost-hnsw-cosine-225k"
+            , async () =>
+            {
+                await new TestContext().VecSimRediSearch_HNSW_index_Cosine_225k_ProcessAsync();
+                return "redisearch-selfhost-hnsw-cosine-225k";
+            }
+        );
+
+
 
 
 app.Run();

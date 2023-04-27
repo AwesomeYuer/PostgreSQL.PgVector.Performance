@@ -8,6 +8,7 @@ using StackExchange.Redis;
 using System.Data;
 using System.Data.Common;
 using Pgvector;
+using Microshaoft.RediSearch;
 
 namespace VectorDataBases.Performance;
 
@@ -101,7 +102,7 @@ ORDER BY
 
 
     [Benchmark]
-    public async Task WikipediaPostgreSQL_25k_ProcessAsync()
+    public async Task WikipediaPostgreSQL_ivfflat_vector_cosine_ops_index_25k_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.postgreSQLConnectionString);
         dataSourceBuilder.UseVector();
@@ -187,21 +188,21 @@ ORDER BY
     //[Benchmark]
     public async Task WikipediaAzureRediSearch_25k_ProcessAsync()
     {
-        await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
+        await WikipediaRediSearch_FLAT_index_Cosine_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
     }
 
     [Benchmark]
-    public async Task WikipediaSelfHostRediSearch_25k_ProcessAsync()
+    public async Task WikipediaSelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync()
     {
-        await WikipediaRediSearch_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
+        await WikipediaRediSearch_FLAT_index_Cosine_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
     }
 
-    private async Task WikipediaRediSearch_25k_ProcessAsync(string connectionString)
+    private async Task WikipediaRediSearch_FLAT_index_Cosine_25k_ProcessAsync(string connectionString)
     {
         // https://redis.io/docs/stack/search/reference/vectors/
         //await Task.CompletedTask;
 
-        var floats = new float[1536]
+        var vector = new float[1536]
                                 .Select
                                     (
                                         (x) =>
@@ -211,61 +212,30 @@ ORDER BY
                                                         .NextSingle();
                                         }
                                     )
-                                //.ToArray()
+                                .ToArray()
                                 ;
 
-        var vectors = floats
-                            .SelectMany
-                                (
-                                    (x) =>
-                                    {
-                                        return
-                                            BitConverter
-                                                    .GetBytes(x);
-                                    }
-                                )
-                            .ToArray();
-
-        //var vectorsHexString =
-        //            vectors
-        //                .Select
-        //                    (
-        //                        (x) =>
-        //                        {
-        //                            return
-        //                                $@"\x{x:X2}";
-        //                        }
-        //                    )
-        //                .Aggregate
-        //                    (
-        //                        (x, y) =>
-        //                        {
-        //                            return
-        //                                $"{x}{y}";
-        //                        }
-        //                    );
-        using ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(connectionString);
-        IDatabase db = redis.GetDatabase();
         int k = 20;
         var indexName = "embeddings-index";
-        var query = $"*=>[KNN {k} @title_vector ${nameof(vectors)} AS vector_score]";
-        SearchCommands ftSearcher = db.FT();
-        //var ftSearch = $@"FT.SEARCH {indexName} ""{query}"" PARAMS 2 {nameof(vectors)} ""{vectorsHexString}"" return 1 title";
+        var queryString = $"*=>[KNN {k} @title_vector ${nameof(vector)} AS score]";
         var searchResult =
-                await
-                    ftSearcher
-                            .SearchAsync
+                await new Query
+                        (
+                            queryString
+                        )
+                            .AddArrayParameter
                                 (
-                                    indexName
-                                    , new Query(query)
-                                            .AddParam
-                                                (
-                                                     nameof(vectors)
-                                                    , vectors
-                                                )
-                                            .SetSortBy("vector_score")
-                                            .Limit(0, k)
-                                            .Dialect(2)
+                                      nameof(vector)
+                                    , vector
+                                )
+                            .SetSortBy("score")
+                            .Limit(0, k)
+                            .Dialect(2)
+                            .FTSearchAsync
+                                (
+                                    GlobalManager
+                                        .SelfHostRedisConnectionString
+                                    , indexName
                                 );
         var documents = searchResult.Documents;
         foreach (var document in documents)
@@ -273,12 +243,86 @@ ORDER BY
             var keyValuePairs = document.GetProperties();
             foreach (var keyValuePair in keyValuePairs)
             {
-                if (keyValuePair.Key == "vector_score")
+                if (keyValuePair.Key == "score")
                 {
                     // Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
                 }
             }
         }
-        await redis.CloseAsync();
+        
+    }
+
+    //public async Task<SearchResult> RediSearch
+    //                (
+    //                    string redisConnectionString
+    //                    , string indexName
+    //                    , Query queryString
+    //                    , 
+    //                )
+    //{
+
+
+    //}
+
+
+    public async Task VecSimRediSearch_HNSW_index_Cosine_225k_ProcessAsync()
+    {
+        // https://redis.io/docs/stack/search/reference/vectors/
+        //await Task.CompletedTask;
+
+        var vector = 
+                    new 
+                        //double
+                        float
+                            [1536]
+                                .Select
+                                    (
+                                        (x) =>
+                                        {
+                                            return
+                                                new Random()
+                                                        .NextSingle();
+                                                        //.NextDouble();
+                                        }
+                                    )
+                                .ToArray()
+                        ;
+
+        int k = 20;
+        var indexName = "vecsim-index";
+        var queryString = $"*=>[KNN {k} @vector ${nameof(vector)} AS score]";
+        var searchResult =
+                await
+                    new Query
+                        (
+                            queryString
+                        )
+                            .AddArrayParameter
+                                (
+                                      nameof(vector)
+                                    , vector
+                                )
+                            .SetSortBy("score")
+                            .Limit(0, k)
+                            .Dialect(2)
+                            .FTSearchAsync
+                                (
+                                    GlobalManager
+                                        .SelfHostRedisConnectionString
+                                    , indexName 
+                                );
+        
+        var documents = searchResult.Documents;
+        foreach (var document in documents)
+        {
+            var keyValuePairs = document.GetProperties();
+            foreach (var keyValuePair in keyValuePairs)
+            {
+                if (keyValuePair.Key == "score")
+                {
+                    Console.WriteLine($"id: {document.Id}, score: {keyValuePair.Value}");
+                }
+            }
+        }
     }
 }
