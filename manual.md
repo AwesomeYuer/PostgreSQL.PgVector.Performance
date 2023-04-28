@@ -162,7 +162,7 @@ docker run --name pgvector -v ~/temp:/share -e POSTGRES_PASSWORD=password01! -d 
 
 sudo docker pull ikende/beetlex_webapi_benchmark:v0.8.6
 
-sudo docker run -name webapi_benchmark -d -p 9090:9090 ikende/beetlex_webapi_benchmark:v0.8.6
+sudo docker run --name webapi_benchmark -d -p 9090:9090 ikende/beetlex_webapi_benchmark:v0.8.6
 
 ```
 
@@ -173,6 +173,13 @@ sudo docker run -name webapi_benchmark -d -p 9090:9090 ikende/beetlex_webapi_ben
 sudo docker stats
 
 # Ô¶³Ì¼à¿Ø
+
+
+```
+
+
+# NODE »·¾³
+```sh
 
 
 ```
