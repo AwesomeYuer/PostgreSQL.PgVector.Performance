@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Sol
 	ProjectSection(SolutionItems) = preProject
 		manual.md = manual.md
 		readme.md = readme.md
+		Vector.DataBases.And.Performance.Awesome.Yuer.pptx = Vector.DataBases.And.Performance.Awesome.Yuer.pptx
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C468CA4E-1B6C-4FBB-867D-35AB15838BE1}"
