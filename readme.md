@@ -80,7 +80,7 @@ EXPLAIN ANALYZE SELECT * FROM embeddings ORDER BY embedding <-> '[3,1,2]' LIMIT 
 
 ```
 
-# .NET 环境
+# .NET 盛世环境
 ```sh
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-2004
 # Add the Microsoft package repository
