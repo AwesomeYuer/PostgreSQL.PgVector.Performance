@@ -1,4 +1,4 @@
-# Docker Run `PostgreSQL` Database Server
+ï»¿# Docker Run `PostgreSQL` Database Server
 ```
 docker pull ankane/pgvector
 
@@ -80,7 +80,7 @@ EXPLAIN ANALYZE SELECT * FROM embeddings ORDER BY embedding <-> '[3,1,2]' LIMIT 
 
 ```
 
-# .NET Ê¢ÊÀ»·¾³
+# .NET ç››ä¸–çŽ¯å¢ƒ
 ```sh
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-2004
 # Add the Microsoft package repository
@@ -267,7 +267,7 @@ Specify the number of probes (1 by default)
 SET ivfflat.probes = 1;
 ```
 
-A higher value provides better recall at the cost of speed, and it can be set to the number of lists for exact nearest neighbor search (at which point the planner won¡¯t use the index)
+A higher value provides better recall at the cost of speed, and it can be set to the number of lists for exact nearest neighbor search (at which point the planner wonâ€™t use the index)
 
 Use `SET LOCAL` inside a transaction to set it for a single query
 
@@ -393,17 +393,17 @@ Operator | Description
 
 Function | Description
 --- | ---
-cosine_distance(vector, vector) ¡ú double precision | cosine distance
-inner_product(vector, vector) ¡ú double precision | inner product
-l2_distance(vector, vector) ¡ú double precision | Euclidean distance
-vector_dims(vector) ¡ú integer | number of dimensions
-vector_norm(vector) ¡ú double precision | Euclidean norm
+cosine_distance(vector, vector) â†’ double precision | cosine distance
+inner_product(vector, vector) â†’ double precision | inner product
+l2_distance(vector, vector) â†’ double precision | Euclidean distance
+vector_dims(vector) â†’ integer | number of dimensions
+vector_norm(vector) â†’ double precision | Euclidean norm
 
 ### Aggregate Functions
 
 Function | Description
 --- | ---
-avg(vector) ¡ú vector | arithmetic mean
+avg(vector) â†’ vector | arithmetic mean
 
 ## Additional Installation Methods
 
