@@ -66,15 +66,15 @@ includeFields.Add("url");
 var result =
             (
                 await client
-                        .SearchAsync
-                            (
-                                searchPoints
-                            )
+                            .SearchAsync
+                                (
+                                    searchPoints
+                                )
             ).Result;
 
-foreach (var f in result)
+foreach (var scoredPoint in result)
 {
-    MapField<string, Value> mapField = f.Payload;
+    MapField<string, Value> mapField = scoredPoint.Payload;
     // Iterate through the key-value pairs in the map field
     foreach (var pair in mapField)
     {
