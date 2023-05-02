@@ -1,5 +1,8 @@
 ﻿using BenchmarkDotNet.Attributes;
+//using BenchmarkDotNet.Validators;
 using Microshaoft.RediSearch;
+//using Microsoft.SemanticKernel.AI.Embeddings;
+//using Microsoft.SemanticKernel.Connectors.Memory.Qdrant;
 using Npgsql;
 using NRedisStack;
 using NRedisStack.Search;
@@ -31,9 +34,8 @@ public class TestContext
                                         (x) =>
                                         {
                                             return
-                                                (float)
                                                     new Random()
-                                                            .NextDouble();
+                                                            .NextSingle();
                                         }
                                     )
                                 .ToArray();
@@ -309,5 +311,52 @@ ORDER BY
                 }
             }
         }
+    }
+
+
+    [Benchmark]
+    public async Task qdrant_index_Cosine_25k_ProcessAsync()
+    {
+        //var client = new QdrantVectorDbClient
+        //                    (
+        //                        "http://kc-misc-001-vm.koreacentral.cloudapp.azure.com/"
+        //                        , 1536
+        //                        , 6333
+        //                    );
+
+        
+
+        //var vector = new float[1536]
+        //                        .Select
+        //                            (
+        //                                (x) =>
+        //                                {
+        //                                    return
+        //                                        new Random()
+        //                                                .NextSingle();
+        //                                }
+        //                            )
+        //                        .ToArray()
+        //                        ;
+
+
+        //var q = client
+        //                    .FindNearestInCollectionAsync
+        //                            (
+        //                                "Articles"
+        //                                , vector.AsEnumerable()
+        //                                //, minRelevanceScore: 0.0
+        //                                , 0
+        //                            );
+        //// Act
+        //await foreach (var a in q)
+        //{ 
+        //    Console.WriteLine(a.Item1);
+        
+        //}
+                
+
+        
+
     }
 }
