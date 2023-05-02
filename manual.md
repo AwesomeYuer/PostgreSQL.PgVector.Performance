@@ -71,6 +71,16 @@ sudo nano /etc/fstab
 # UUID=da83d5a3-bb4c-473d-be1a-cec2cd63fae2 /userdata        ext4    defaults 0 2
 # UUID=da83d5a3-bb4c-473d-be1a-cec2cd63fae2 /home/<userName>/data        ext4    defaults 0 2
 
+mkdir /home/<userName>/MyGitHub
+
+ln -s /home/<userName>/MyGitHub /home/<userName>/data/
+
+mkdir /home/<userName>/docker
+
+ln -s /home/<userName>/docker /home/<userName>/data/
+
+	
+
 ```
 
 # Docker
@@ -81,6 +91,13 @@ sudo apt install docker.io
 sudo docker ps -a
 
 sudo apt install docker-compose
+
+
+sudo docker info
+
+sudo service docker restart
+
+systemctl restart docker
 
 docker system df
 
