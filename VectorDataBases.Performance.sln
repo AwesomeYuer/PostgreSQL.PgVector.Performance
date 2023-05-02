@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportToPostgreSQL.Tools", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorDataBases.Performance", "VectorDataBases.Performance\VectorDataBases.Performance.csproj", "{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticKernel.Abstractions", "Semantic-Kernel\SemanticKernel.Abstractions\SemanticKernel.Abstractions.csproj", "{E85A2499-5043-4509-B998-C4DC0E42A7A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E85A2499-5043-4509-B998-C4DC0E42A7A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E85A2499-5043-4509-B998-C4DC0E42A7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E85A2499-5043-4509-B998-C4DC0E42A7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E85A2499-5043-4509-B998-C4DC0E42A7A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
