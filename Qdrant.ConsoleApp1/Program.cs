@@ -12,7 +12,7 @@ var client = new Points.PointsClient(channel);
 
 var searchPoints = new SearchPoints()
 { 
-    CollectionName = "Articles"
+      CollectionName = "Articles"
     , Offset = 0
     , Limit = 20
     , WithPayload = new WithPayloadSelector()
