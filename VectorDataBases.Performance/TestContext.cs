@@ -202,7 +202,7 @@ ORDER BY
     }
 
     [Benchmark]
-    public async Task SelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync()
+    public async Task RediSearch_FLAT_index_Cosine_25k_ProcessAsync()
     {
         await RediSearch_FLAT_index_Cosine_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
     }
@@ -324,7 +324,7 @@ ORDER BY
     }
 
     [Benchmark]
-    public async Task Qdrant_Grpc_Cosine_25k_ProcessAsync()
+    public async Task Qdrant_Grpc_HNSW_Index_Cosine_225k_ProcessAsync()
     {
         using var channel = GrpcChannel.ForAddress(GlobalManager.SelfHostQdrantGrpcConnectionString);
         

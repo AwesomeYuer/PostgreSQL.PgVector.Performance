@@ -46,7 +46,7 @@ app
               "/redisearch-selfhost-flat-cosine-25k"
             , async () =>
             {
-                await new TestContext().SelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync();
+                await new TestContext().RediSearch_FLAT_index_Cosine_25k_ProcessAsync();
                 return "redisearch-selfhost-flat-cosine-25k";
             }
         );

@@ -174,6 +174,15 @@ docker run --name pgvector -v ~/temp:/share -e POSTGRES_PASSWORD=password01! -d 
 
 ```
 
+# qdrant
+
+https://github.com/Azure-Samples/qdrant-azure
+
+https://devblogs.microsoft.com/semantic-kernel/the-power-of-persistent-memory-with-semantic-kernel-and-qdrant-vector-database/
+
+https://devblogs.microsoft.com/semantic-kernel/qdrant/
+
+
 # Ñ¹²â¿ØÖÆÌ¨
 ```
 
