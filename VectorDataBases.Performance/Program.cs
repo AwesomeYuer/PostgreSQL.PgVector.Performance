@@ -13,7 +13,7 @@ public class Program
         // new TestContext().RediSearch_HNSW_index_Cosine_225k_ProcessAsync().Wait();
 
         //new TestContext().Qdrant_Cosine_25k_ProcessAsync().Wait();
-        //new TestContext().qdrant_SK_HNSW_index_Cosine_6_ProcessAsync().Wait();
+        //new TestContext().qdrant_SK_Http_HNSW_index_Cosine_50_ProcessAsync().Wait();
         _ = BenchmarkRunner.Run<TestContext>();
         Console.WriteLine($"{nameof(BenchmarkRunner)}.{nameof(BenchmarkRunner.Run)} done!");
         Console.ReadLine();
