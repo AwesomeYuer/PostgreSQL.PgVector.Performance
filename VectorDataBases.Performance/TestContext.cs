@@ -466,7 +466,7 @@ ORDER BY
         //Console.WriteLine(memory2 != null ? memory2.Metadata.Text : "ERROR: memory not found");
         //Console.WriteLine(memory3 != null ? memory3.Metadata.Text : "ERROR: memory not found");
 
-        Console.WriteLine("== Similarity Searching Memories: My favorite color is orange ==");
+        //Console.WriteLine("== Similarity Searching Memories: My favorite color is orange ==");
         var searchResults = kernel
                                 .Memory
                                 .SearchAsync
