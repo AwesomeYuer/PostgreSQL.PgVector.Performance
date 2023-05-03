@@ -332,7 +332,7 @@ ORDER BY
 
         var searchPoints = new SearchPoints()
         {
-            CollectionName = "Articles"
+              CollectionName = "Articles"
             , Offset = 0
             , Limit = 20
             , WithPayload = new WithPayloadSelector()
@@ -409,14 +409,14 @@ ORDER BY
 
 
     //[Benchmark]
-    public async Task qdrant_SK_index_Cosine_25k_ProcessAsync()
+    public async Task qdrant_SK_HNSW_index_Cosine_6_ProcessAsync()
     {
         QdrantMemoryStore memoryStore =
                 new QdrantMemoryStore
                             (
-                                GlobalManager.SelfHostQdrantGrpcConnectionString
+                                GlobalManager.SelfHostQdrantHttpConnectionString
                                 , 6333
-                                , vectorSize: 1536
+                                , vectorSize: 4
                                 //, ConsoleLogger.Log
                             );
         IKernel kernel = Kernel.Builder
@@ -432,14 +432,14 @@ ORDER BY
             .WithMemoryStorage(memoryStore)
             .Build();
 
-        Console.WriteLine("== Printing Collections in DB ==");
-        var collections = memoryStore.GetCollectionsAsync();
-        await foreach (var collection in collections)
-        {
-            Console.WriteLine(collection);
-        }
+        //Console.WriteLine("== Printing Collections in DB ==");
+        //var collections = memoryStore.GetCollectionsAsync();
+        //await foreach (var collection in collections)
+        //{
+        //    Console.WriteLine(collection);
+        //}
 
-        var MemoryCollectionName = "Articles";
+        var MemoryCollectionName = "small";
 
         //Console.WriteLine("== Adding Memories ==");
 
@@ -486,11 +486,11 @@ ORDER BY
         //Console.WriteLine("== Removing Collection {0} ==", MemoryCollectionName);
         //await memoryStore.DeleteCollectionAsync(MemoryCollectionName);
 
-        Console.WriteLine("== Printing Collections in DB ==");
-        await foreach (var collection in collections)
-        {
-            Console.WriteLine(collection);
-        }
+        //Console.WriteLine("== Printing Collections in DB ==");
+        //await foreach (var collection in collections)
+        //{
+        //    Console.WriteLine(collection);
+        //}
 
 
 

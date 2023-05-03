@@ -12,4 +12,6 @@ public static class GlobalManager
     public static string AzureRedisConnectionString = "awesomeyuer.eastus.redisenterprise.cache.azure.net:10000, password=ethDvIX6Ccc4qL8kq7Wsp7X2aNObRiXN28MnDxaKm0c=";
 
     public static string SelfHostQdrantGrpcConnectionString = "http://localhost:6334";
+
+    public static string SelfHostQdrantHttpConnectionString = "http://localhost:6333";
 }

@@ -112,7 +112,7 @@ public sealed class SemanticTextMemory : ISemanticTextMemory, IDisposable
 #else
         new  Embedding<float>
                 (
-                    new float[1536]
+                    new float[4]
                                 .Select
                                     (
                                         (x) =>
