@@ -473,7 +473,7 @@ ORDER BY
                                         (
                                             MemoryCollectionName
                                             , "My favorite color is orange"
-                                            , limit: 3
+                                            , limit: 20
                                             , minRelevanceScore: 0.8
                                             , withEmbeddings: true
                                         );
