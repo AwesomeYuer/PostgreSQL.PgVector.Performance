@@ -480,7 +480,8 @@ ORDER BY
 
         await foreach (var item in searchResults)
         {
-            Console.WriteLine(item.Metadata.Text + " : " + item.Relevance);
+            //Console.WriteLine(item.Metadata.Text + " : " + item.Relevance);
+            _ = item.Relevance;
         }
 
         //Console.WriteLine("== Removing Collection {0} ==", MemoryCollectionName);
