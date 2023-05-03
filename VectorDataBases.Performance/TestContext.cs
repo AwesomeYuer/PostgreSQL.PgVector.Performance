@@ -408,7 +408,7 @@ ORDER BY
     }
 
 
-    //[Benchmark]
+    [Benchmark]
     public async Task qdrant_SK_HNSW_index_Cosine_6_ProcessAsync()
     {
         QdrantMemoryStore memoryStore =
