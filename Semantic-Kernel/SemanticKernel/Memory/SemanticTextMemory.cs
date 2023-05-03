@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
+# define AwesomeYuerDebug
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,9 +103,29 @@ public sealed class SemanticTextMemory : ISemanticTextMemory, IDisposable
         bool withEmbeddings = false,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        Embedding<float> queryEmbedding = await this._embeddingGenerator.GenerateEmbeddingAsync(query, cancellationToken).ConfigureAwait(false);
+        // add by AwesomeYuer for using Random Vector avoid invoke OpenAI
 
-        IAsyncEnumerable<(MemoryRecord, double)> results = this._storage.GetNearestMatchesAsync(
+        Embedding<float> queryEmbedding =
+#if !AwesomeYuerDebug
+
+        await this._embeddingGenerator.GenerateEmbeddingAsync(query, cancellationToken).ConfigureAwait(false)
+#else
+        new  Embedding<float>
+                (
+                    new float[1536]
+                                .Select
+                                    (
+                                        (x) =>
+                                        {
+                                            return
+                                                    new Random()
+                                                            .NextSingle();
+                                        }
+                                    )
+                )
+#endif
+            ;
+        IAsyncEnumerable <(MemoryRecord, double)> results = this._storage.GetNearestMatchesAsync(
             collectionName: collection,
             embedding: queryEmbedding,
             limit: limit,

@@ -20,7 +20,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportToPostgreSQL.Tools", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorDataBases.Performance", "VectorDataBases.Performance\VectorDataBases.Performance.csproj", "{2D718BF3-3B93-49CA-B6F1-310F8E4D31BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qdrant.ConsoleApp1", "Qdrant.ConsoleApp1\Qdrant.ConsoleApp1.csproj", "{9DC4B71E-B0C7-4163-AF1D-261D6CAB1C43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Qdrant.ConsoleApp1", "Qdrant.ConsoleApp1\Qdrant.ConsoleApp1.csproj", "{9DC4B71E-B0C7-4163-AF1D-261D6CAB1C43}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Connectors.Memory.Qdrant", "Semantic-Kernel\Connectors\Connectors.Memory.Qdrant\Connectors.Memory.Qdrant.csproj", "{B1D5B2A0-3450-46FA-B070-21120B089D3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "20.sk", "20.sk", "{4ED23327-CBAC-4BE3-BB37-61338FA679BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticKernel", "Semantic-Kernel\SemanticKernel\SemanticKernel.csproj", "{295CD46A-EE14-4742-91F0-AAE48F212B77}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticKernel.Abstractions", "Semantic-Kernel\SemanticKernel.Abstractions\SemanticKernel.Abstractions.csproj", "{86AA0C30-C1BF-4510-8D8B-70CCFA6D71C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Connectors.AI.OpenAI", "Semantic-Kernel\Connectors\Connectors.AI.OpenAI\Connectors.AI.OpenAI.csproj", "{9CDE6480-AD5E-4043-9708-B0D881286039}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,12 +58,32 @@ Global
 		{9DC4B71E-B0C7-4163-AF1D-261D6CAB1C43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DC4B71E-B0C7-4163-AF1D-261D6CAB1C43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DC4B71E-B0C7-4163-AF1D-261D6CAB1C43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1D5B2A0-3450-46FA-B070-21120B089D3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D5B2A0-3450-46FA-B070-21120B089D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D5B2A0-3450-46FA-B070-21120B089D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D5B2A0-3450-46FA-B070-21120B089D3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{295CD46A-EE14-4742-91F0-AAE48F212B77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{295CD46A-EE14-4742-91F0-AAE48F212B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{295CD46A-EE14-4742-91F0-AAE48F212B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{295CD46A-EE14-4742-91F0-AAE48F212B77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86AA0C30-C1BF-4510-8D8B-70CCFA6D71C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86AA0C30-C1BF-4510-8D8B-70CCFA6D71C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86AA0C30-C1BF-4510-8D8B-70CCFA6D71C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86AA0C30-C1BF-4510-8D8B-70CCFA6D71C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CDE6480-AD5E-4043-9708-B0D881286039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CDE6480-AD5E-4043-9708-B0D881286039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CDE6480-AD5E-4043-9708-B0D881286039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CDE6480-AD5E-4043-9708-B0D881286039}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{67BA99FC-D080-4106-81F0-3E42DC2A1D35} = {C4697223-E958-43FB-9371-DC214D27DC51}
+		{B1D5B2A0-3450-46FA-B070-21120B089D3F} = {4ED23327-CBAC-4BE3-BB37-61338FA679BF}
+		{295CD46A-EE14-4742-91F0-AAE48F212B77} = {4ED23327-CBAC-4BE3-BB37-61338FA679BF}
+		{86AA0C30-C1BF-4510-8D8B-70CCFA6D71C1} = {4ED23327-CBAC-4BE3-BB37-61338FA679BF}
+		{9CDE6480-AD5E-4043-9708-B0D881286039} = {4ED23327-CBAC-4BE3-BB37-61338FA679BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E02ED61C-D207-408E-9B88-39A7F73860E4}

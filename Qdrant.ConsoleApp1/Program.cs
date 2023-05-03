@@ -5,7 +5,7 @@ using Qdrant;
 
 Console.WriteLine("Hello, World!");
 
-var channel = GrpcChannel.ForAddress("http://kc-misc-001-vm.koreacentral.cloudapp.azure.com:6334");
+using var channel = GrpcChannel.ForAddress("http://kc-misc-001-vm.koreacentral.cloudapp.azure.com:6334");
 //var client = new Greeter.GreeterClient(channel);
 
 var client = new Points.PointsClient(channel);
@@ -72,17 +72,22 @@ var result =
                                 )
             ).Result;
 
+var i = 0 ;
 foreach (var scoredPoint in result)
 {
+    //Console.WriteLine(i++);
     MapField<string, Value> mapField = scoredPoint.Payload;
     // Iterate through the key-value pairs in the map field
     foreach (var pair in mapField)
     {
         string key = pair.Key;
         Value @value = pair.Value;
-        Console.WriteLine($"Key: {key}, Value: {@value}");
+        // Console.WriteLine($"Key: {key}, Value: {@value}");
     }
 }
+
+//await client.ClearPayloadAsync(searchPoints);
+
 
 //Console.WriteLine("asdasd");
 

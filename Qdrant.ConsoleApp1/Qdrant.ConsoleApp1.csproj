@@ -14,14 +14,7 @@
 		<Protobuf Include="Protos\collections_service.proto" GrpcServices="Client" />
 		<Protobuf Include="Protos\points_service.proto" GrpcServices="Client" />
 		<Protobuf Include="Protos\qdrant.proto" GrpcServices="Client" />
-		
-		
 		<!--<Protobuf Include="Protos\greet.proto" GrpcServices="Client" />-->
-		
-		
-		
-		
-		
 	</ItemGroup>
 	
     <ItemGroup>

@@ -1,15 +1,25 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Loggers;
+using Google.Protobuf.Collections;
+using Grpc.Net.Client;
 //using BenchmarkDotNet.Validators;
 using Microshaoft.RediSearch;
+using Microsoft.SemanticKernel;
 //using Microsoft.SemanticKernel.AI.Embeddings;
-//using Microsoft.SemanticKernel.Connectors.Memory.Qdrant;
+using Microsoft.SemanticKernel.Connectors.Memory.Qdrant;
+using Microsoft.SemanticKernel.Memory;
 using Npgsql;
 using NRedisStack;
 using NRedisStack.Search;
 using Pgvector;
 using Pgvector.Npgsql;
+using Qdrant;
 using System.Data;
 using System.Data.Common;
+using System.Globalization;
+using PgVector = Pgvector.Vector;
+
+
 
 namespace VectorDataBases.Performance;
 
@@ -40,7 +50,7 @@ public class TestContext
                                     )
                                 .ToArray();
 
-            var pgVector = new Vector(floats);
+            var pgVector = new PgVector(floats);
             var limit = 20;
             var sql = @$"
 WITH
@@ -126,7 +136,7 @@ ORDER BY
                                     )
                                 .ToArray();
 
-            var pgVector = new Vector(floats);
+            var pgVector = new PgVector(floats);
             var limit = 20;
             var sql = @$"
 WITH
@@ -313,50 +323,177 @@ ORDER BY
         }
     }
 
-
     [Benchmark]
-    public async Task qdrant_index_Cosine_25k_ProcessAsync()
+    public async Task Qdrant_Grpc_Cosine_25k_ProcessAsync()
     {
-        //var client = new QdrantVectorDbClient
-        //                    (
-        //                        "http://kc-misc-001-vm.koreacentral.cloudapp.azure.com/"
-        //                        , 1536
-        //                        , 6333
-        //                    );
-
+        using var channel = GrpcChannel.ForAddress(GlobalManager.SelfHostQdrantGrpcConnectionString);
         
+        var client = new Points.PointsClient(channel);
 
-        //var vector = new float[1536]
-        //                        .Select
-        //                            (
-        //                                (x) =>
-        //                                {
-        //                                    return
-        //                                        new Random()
-        //                                                .NextSingle();
-        //                                }
-        //                            )
-        //                        .ToArray()
-        //                        ;
+        var searchPoints = new SearchPoints()
+        {
+            CollectionName = "Articles"
+            , Offset = 0
+            , Limit = 20
+            , WithPayload = new WithPayloadSelector()
+            {
+                //Exclude = new PayloadExcludeSelector()
+                Include = new PayloadIncludeSelector()
+            }
+            , WithVectors = new WithVectorsSelector()
+            {
+                Enable = false
+            }
+            , VectorName = "title"
+        };
+
+        var floats =
+                    new float[1536]
+                                .Select
+                                    (
+                                        (x) =>
+                                        {
+                                            return
+                                                    new Random()
+                                                            .NextSingle();
+                                        }
+                                    )
+                                //.ToArray()
+                                ;
+
+        foreach (var f in floats)
+        {
+            searchPoints.Vector.Add(f);
+        }
 
 
-        //var q = client
-        //                    .FindNearestInCollectionAsync
-        //                            (
-        //                                "Articles"
-        //                                , vector.AsEnumerable()
-        //                                //, minRelevanceScore: 0.0
-        //                                , 0
-        //                            );
-        //// Act
-        //await foreach (var a in q)
-        //{ 
-        //    Console.WriteLine(a.Item1);
-        
+        //var excludeFields = searchPoints
+        //                            .WithPayload
+        //                            .Exclude
+        //                            .Fields;
+        //excludeFields.Add("content_vector");
+        //excludeFields.Add("title_vector");
+
+        var includeFields = searchPoints
+                                    .WithPayload
+                                    .Include
+                                    .Fields;
+
+        includeFields.Add("title");
+        includeFields.Add("id");
+        includeFields.Add("url");
+
+        var result =
+                    (
+                        await client
+                                    .SearchAsync
+                                        (
+                                            searchPoints
+                                        )
+                    ).Result;
+
+        var i = 0;
+        foreach (var scoredPoint in result)
+        {
+            //Console.WriteLine(i++);
+            MapField<string, Value> mapField = scoredPoint.Payload;
+            // Iterate through the key-value pairs in the map field
+            foreach (var keyValuePair in mapField)
+            {
+                _ = keyValuePair.Key;
+                _ = keyValuePair.Value;
+                // Console.WriteLine($"Key: {key}, Value: {@value}");
+            }
+        }
+    }
+
+
+    //[Benchmark]
+    public async Task qdrant_SK_index_Cosine_25k_ProcessAsync()
+    {
+        QdrantMemoryStore memoryStore =
+                new QdrantMemoryStore
+                            (
+                                GlobalManager.SelfHostQdrantGrpcConnectionString
+                                , 6333
+                                , vectorSize: 1536
+                                //, ConsoleLogger.Log
+                            );
+        IKernel kernel = Kernel.Builder
+            //.WithLogger(ConsoleLogger.Log)
+            .Configure
+            (
+                c =>
+                {
+                    c.AddOpenAITextCompletionService("text-davinci-003", "123");
+                    c.AddOpenAITextEmbeddingGenerationService("text-embedding-ada-002", "123");
+                }
+            )
+            .WithMemoryStorage(memoryStore)
+            .Build();
+
+        Console.WriteLine("== Printing Collections in DB ==");
+        var collections = memoryStore.GetCollectionsAsync();
+        await foreach (var collection in collections)
+        {
+            Console.WriteLine(collection);
+        }
+
+        var MemoryCollectionName = "Articles";
+
+        //Console.WriteLine("== Adding Memories ==");
+
+        //var key1 = await kernel.Memory.SaveInformationAsync(MemoryCollectionName, id: "cat1", text: "british short hair");
+        //var key2 = await kernel.Memory.SaveInformationAsync(MemoryCollectionName, id: "cat2", text: "orange tabby");
+        //var key3 = await kernel.Memory.SaveInformationAsync(MemoryCollectionName, id: "cat3", text: "norwegian forest cat");
+
+        //Console.WriteLine("== Printing Collections in DB ==");
+        //collections = memoryStore.GetCollectionsAsync();
+        //await foreach (var collection in collections)
+        //{
+        //    Console.WriteLine(collection);
         //}
-                
 
-        
+        //Console.WriteLine("== Retrieving Memories Through the Kernel ==");
+        //MemoryQueryResult? lookup = await kernel.Memory.GetAsync(MemoryCollectionName, "cat1");
+        //Console.WriteLine(lookup != null ? lookup.Metadata.Text : "ERROR: memory not found");
+
+        //Console.WriteLine("== Retrieving Memories Directly From the Store ==");
+        //var memory1 = await memoryStore.GetWithPointIdAsync(MemoryCollectionName, key1);
+        //var memory2 = await memoryStore.GetWithPointIdAsync(MemoryCollectionName, key2);
+        //var memory3 = await memoryStore.GetWithPointIdAsync(MemoryCollectionName, key3);
+        //Console.WriteLine(memory1 != null ? memory1.Metadata.Text : "ERROR: memory not found");
+        //Console.WriteLine(memory2 != null ? memory2.Metadata.Text : "ERROR: memory not found");
+        //Console.WriteLine(memory3 != null ? memory3.Metadata.Text : "ERROR: memory not found");
+
+        Console.WriteLine("== Similarity Searching Memories: My favorite color is orange ==");
+        var searchResults = kernel
+                                .Memory
+                                .SearchAsync
+                                        (
+                                            MemoryCollectionName
+                                            , "My favorite color is orange"
+                                            , limit: 3
+                                            , minRelevanceScore: 0.8
+                                            , withEmbeddings: true
+                                        );
+
+        await foreach (var item in searchResults)
+        {
+            Console.WriteLine(item.Metadata.Text + " : " + item.Relevance);
+        }
+
+        //Console.WriteLine("== Removing Collection {0} ==", MemoryCollectionName);
+        //await memoryStore.DeleteCollectionAsync(MemoryCollectionName);
+
+        Console.WriteLine("== Printing Collections in DB ==");
+        await foreach (var collection in collections)
+        {
+            Console.WriteLine(collection);
+        }
+
+
+
 
     }
 }

@@ -20,7 +20,7 @@
     <!--Setting version overrides to miniumum supported version, to maximize compatability.-->
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-    <PackageReference Include="System.Linq.Async"  Version="4.0.0" />
+    <PackageReference Include="System.Linq.Async" Version="4.0.0" />
     <PackageReference Include="System.Text.Json" Version="6.0.7" />
 
 	  <!-- Microsoft.Extensions.Logging -->
@@ -32,6 +32,9 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Microsoft.SemanticKernel.Core" />
+	<InternalsVisibleTo Include="Microsoft.SemanticKernel.Connectors.AI.OpenAI"  />	  
+	  
+	  
     <!--<InternalsVisibleTo Include="Microsoft.SemanticKernel.Connectors.AI.OpenAI" PublicKey="$(StongNamePublicKey)"/>
     <InternalsVisibleTo Include="Microsoft.SemanticKernel.Planning.ActionPlanner" PublicKey="$(StongNamePublicKey)"/>
     <InternalsVisibleTo Include="Microsoft.SemanticKernel.Planning.SequentialPlanner" PublicKey="$(StongNamePublicKey)"/>

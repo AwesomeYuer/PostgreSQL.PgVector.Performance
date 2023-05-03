@@ -10,11 +10,60 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
     <PackageReference Include="NRedisStack" Version="0.6.0" />
+	  
+	<PackageReference Include="Google.Protobuf" Version="3.22.3" />
+	<PackageReference Include="Google.Protobuf.Tools" Version="3.22.3" />
+	<PackageReference Include="Grpc.Net.Client" Version="2.52.0" />
+	<PackageReference Include="Grpc.Tools" Version="2.54.0">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>	  
+	  
+	  
   </ItemGroup>
+
+
+	<ItemGroup>
+		<Protobuf Include="qdrant\Protos\snapshots_service.proto" GrpcServices="Client" />
+		<Protobuf Include="qdrant\Protos\json_with_int.proto" GrpcServices="Client" />
+		<Protobuf Include="qdrant\Protos\collections.proto" GrpcServices="Client" />
+		<Protobuf Include="qdrant\Protos\points.proto" GrpcServices="Client" />
+		<Protobuf Include="qdrant\Protos\collections_service.proto" GrpcServices="Client" />
+		<Protobuf Include="qdrant\Protos\points_service.proto" GrpcServices="Client" />
+		<Protobuf Include="qdrant\Protos\qdrant.proto" GrpcServices="Client" />
+		<!--<Protobuf Include="Protos\greet.proto" GrpcServices="Client" />-->
+	</ItemGroup>
+	
 
   <ItemGroup>
     <ProjectReference Include="..\pgvector-dotNET\pgvector-dotNET.csproj" />
+    <ProjectReference Include="..\Semantic-Kernel\Connectors\Connectors.AI.OpenAI\Connectors.AI.OpenAI.csproj" />
+    <ProjectReference Include="..\Semantic-Kernel\Connectors\Connectors.Memory.Qdrant\Connectors.Memory.Qdrant.csproj" />
     <!--<ProjectReference Include="..\StackExchange.Redis\StackExchange.Redis.csproj" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="qdrant\Protos\collections.proto">
+      <GrpcServices>Client</GrpcServices>
+    </None>
+    <None Update="qdrant\Protos\collections_service.proto">
+      <GrpcServices>Client</GrpcServices>
+    </None>
+    <None Update="qdrant\Protos\json_with_int.proto">
+      <GrpcServices>Client</GrpcServices>
+    </None>
+    <None Update="qdrant\Protos\points.proto">
+      <GrpcServices>Client</GrpcServices>
+    </None>
+    <None Update="qdrant\Protos\points_service.proto">
+      <GrpcServices>Client</GrpcServices>
+    </None>
+    <None Update="qdrant\Protos\qdrant.proto">
+      <GrpcServices>Client</GrpcServices>
+    </None>
+    <None Update="qdrant\Protos\snapshots_service.proto">
+      <GrpcServices>Client</GrpcServices>
+    </None>
   </ItemGroup>
 
 </Project>
