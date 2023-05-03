@@ -409,7 +409,7 @@ ORDER BY
 
 
     [Benchmark]
-    public async Task qdrant_SK_Http_HNSW_index_Cosine_6_ProcessAsync()
+    public async Task qdrant_SK_Http_HNSW_index_Cosine_50_ProcessAsync()
     {
         QdrantMemoryStore memoryStore =
                 new QdrantMemoryStore
