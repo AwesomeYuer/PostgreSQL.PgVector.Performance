@@ -12,8 +12,6 @@ using System.Data;
 using System.Data.Common;
 using PgVector = Pgvector.Vector;
 
-
-
 namespace VectorDataBases.Performance;
 
 public class TestContext
@@ -272,7 +270,6 @@ ORDER BY
                                             return
                                                 new Random()
                                                         .NextSingle();
-                                                        //.NextDouble();
                                         }
                                     )
                                 .ToArray()
