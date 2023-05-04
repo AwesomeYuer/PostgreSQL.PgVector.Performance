@@ -424,11 +424,18 @@ ORDER BY
                                     }
                                 );
 
+        using var httpClient = new HttpClient()
+        { 
+             BaseAddress = new Uri(GlobalManager.SelfHostQdrantHttpConnectionString)
+        };
+
         var qdrantVectorDbClient =
                         new QdrantVectorDbClient
                                 (
                                     GlobalManager.SelfHostQdrantHttpConnectionString
                                     , vectorDimension
+                                    , 6333
+                                    , httpClient
                                 );
 
         var searchResults =
