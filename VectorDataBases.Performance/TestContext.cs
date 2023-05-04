@@ -1,23 +1,15 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Loggers;
 using Google.Protobuf.Collections;
 using Grpc.Net.Client;
-//using BenchmarkDotNet.Validators;
 using Microshaoft.RediSearch;
-using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.AI.Embeddings;
-//using Microsoft.SemanticKernel.AI.Embeddings;
 using Microsoft.SemanticKernel.Connectors.Memory.Qdrant;
-using Microsoft.SemanticKernel.Memory;
 using Npgsql;
 using NRedisStack;
 using NRedisStack.Search;
-using Pgvector;
 using Pgvector.Npgsql;
 using Qdrant;
 using System.Data;
 using System.Data.Common;
-using System.Globalization;
 using PgVector = Pgvector.Vector;
 
 
