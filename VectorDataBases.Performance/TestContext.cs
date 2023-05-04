@@ -334,22 +334,24 @@ ORDER BY
                 Include = new PayloadIncludeSelector()
             }
         };
+        var vectorDimension = 1536;
+        var vector =
+                Enumerable
+                    .Range
+                        (0, vectorDimension)
+                    .Select
+                        (
+                            (x) =>
+                            {
+                                return
+                                    new Random()
+                                            .NextSingle();
+                            }
+                        )
+                    //.ToArray()
+                    ;
 
-        var floats =
-                    new float[1536]
-                                .Select
-                                    (
-                                        (x) =>
-                                        {
-                                            return
-                                                    new Random()
-                                                            .NextSingle();
-                                        }
-                                    )
-                                //.ToArray()
-                                ;
-
-        foreach (var f in floats)
+        foreach (var f in vector)
         {
             searchPoints.Vector.Add(f);
         }
@@ -405,16 +407,18 @@ ORDER BY
         var collectionName = "embeddings";
 
         var vector =
-                new float[vectorDimension]
-                            .Select
-                                (
-                                    (x) =>
-                                    {
-                                        return
-                                                new Random()
-                                                        .NextSingle();
-                                    }
-                                );
+                Enumerable
+                        .Range
+                            (0, vectorDimension)  
+                        .Select
+                            (
+                                (x) =>
+                                {
+                                    return
+                                        new Random()
+                                                .NextSingle();
+                                }
+                            );
 
         using var httpClient = new HttpClient()
         { 
