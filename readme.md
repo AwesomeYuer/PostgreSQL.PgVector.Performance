@@ -1,8 +1,8 @@
 ﻿# `Qdrant` non-concurrency `BenchmarkDotNet` performance testing
 
-![qdrant.50w.100w.grpc.http.local](Assets/qdrant.50w.100w.grpc.http.local.png)
+![qdrant.50w.100w.grpc.http.local](VectorDataBases.Performance/Assets/qdrant.50w.100w.grpc.http.local.png)
 
-![qdrant.advantage.local](Assets/qdrant.advantage.local.png)
+![qdrant.advantage.local](VectorDataBases.Performance/Assets/qdrant.advantage.local.png)
 
 # Docker Run `PostgreSQL` Database Server
 ```
