@@ -9,7 +9,7 @@ public static class GlobalManager
         //"Host=localhost;Database=pgvectors;User Id=sa;Password=2022db@Qwer"
         ;
     public static string SelfHostRedisConnectionString = "localhost, password=2022db@Qwer";
-    public static string AzureRedisConnectionString = "awesomeyuer.eastus.redisenterprise.cache.azure.net:10000, password=ethDvIX6Ccc4qL8kq7Wsp7X2aNObRiXN28MnDxaKm0c=";
+    public static string AzureRedisConnectionString = "awesomeyuer.eastus.redisenterprise.cache.azure.net:10000, password=zzzz6Ccc4qL8kq7Wsp7X2aNObRiXN28MnDxaKm0c=";
 
     public static string SelfHostQdrantGrpcConnectionString = "http://localhost:6334";
 
