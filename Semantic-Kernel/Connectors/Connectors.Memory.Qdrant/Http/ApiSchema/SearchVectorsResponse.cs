@@ -14,6 +14,7 @@ internal sealed class SearchVectorsResponse : QdrantResponse
     internal sealed class ScoredPoint
     {
         [JsonPropertyName("id")]
+        // add by AwesomeYuer@Microshaoft @ 2023-05-04
         [JsonConverter(typeof(NumberToStringConverter))]
         public string Id { get; }
 
@@ -57,14 +58,17 @@ internal sealed class SearchVectorsResponse : QdrantResponse
 
     #endregion
 }
-
 #pragma warning restore CA1812 // Avoid uninstantiated internal classes
 
+// add by AwesomeYuer@Microshaoft @ 2023-05-04
 public class NumberToStringConverter : JsonConverter<string>
 {
-    private NumberFormatInfo _numberFormatInfo = new NumberFormatInfo();
     public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
+        if (typeToConvert != typeof(string))
+        {
+            throw new NotSupportedException($"{nameof(typeToConvert)}: {typeToConvert}");
+        }
         var result = string.Empty;
         var tokenType = reader.TokenType;
         if
@@ -80,7 +84,7 @@ public class NumberToStringConverter : JsonConverter<string>
             )
         {
             reader.TryGetInt32(out var valueInt);
-            result = valueInt.ToString(this._numberFormatInfo);
+            result = valueInt.ToString("D", NumberFormatInfo.InvariantInfo);
         }
         else
         {
