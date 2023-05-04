@@ -12,9 +12,9 @@ public class Program
         ////new TestContext().WikipediaSelfHostRediSearch_FLAT_index_Cosine_25k_ProcessAsync().Wait();
         // new TestContext().RediSearch_HNSW_index_Cosine_225k_ProcessAsync().Wait();
 
-        //new TestContext().Qdrant_Cosine_25k_ProcessAsync().Wait();
-        new TestContext().qdrant_SK_Http_HNSW_index_Cosine_50_ProcessAsync().Wait();
-        //_ = BenchmarkRunner.Run<TestContext>();
+        //new TestContext().Qdrant_Grpc_HNSW_Index_Cosine_225k_ProcessAsync().Wait();
+        //new TestContext().Qdrant_SK_Http_HNSW_index_Cosine_225k_ProcessAsync().Wait();
+        _ = BenchmarkRunner.Run<TestContext>();
         Console.WriteLine($"{nameof(BenchmarkRunner)}.{nameof(BenchmarkRunner.Run)} done!");
         Console.ReadLine();
     }

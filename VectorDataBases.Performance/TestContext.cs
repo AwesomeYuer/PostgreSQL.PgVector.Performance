@@ -333,7 +333,7 @@ ORDER BY
 
         var searchPoints = new SearchPoints()
         {
-              CollectionName = "Articles"
+              CollectionName = "embeddings"
             , Offset = 0
             , Limit = 20
             , WithPayload = new WithPayloadSelector()
@@ -341,11 +341,6 @@ ORDER BY
                 //Exclude = new PayloadExcludeSelector()
                 Include = new PayloadIncludeSelector()
             }
-            , WithVectors = new WithVectorsSelector()
-            {
-                Enable = false
-            }
-            , VectorName = "title"
         };
 
         var floats =
@@ -380,9 +375,11 @@ ORDER BY
                                     .Include
                                     .Fields;
 
-        includeFields.Add("title");
         includeFields.Add("id");
+        includeFields.Add("text");
+        includeFields.Add("title");
         includeFields.Add("url");
+        includeFields.Add("vector_id");
 
         var result =
                     (
@@ -393,7 +390,7 @@ ORDER BY
                                         )
                     ).Result;
 
-        var i = 0;
+        //var i = 0;
         foreach (var scoredPoint in result)
         {
             //Console.WriteLine(i++);
@@ -403,33 +400,35 @@ ORDER BY
             {
                 _ = keyValuePair.Key;
                 _ = keyValuePair.Value;
-                // Console.WriteLine($"Key: {key}, Value: {@value}");
+                //Console.WriteLine($"Key: {keyValuePair.Key}, Value: {keyValuePair.Value}");
             }
         }
     }
 
     [Benchmark]
-    public async Task qdrant_SK_Http_HNSW_index_Cosine_50_ProcessAsync()
+    public async Task Qdrant_SK_Http_HNSW_index_Cosine_225k_ProcessAsync()
     {
-        var collectionName = "small";
+        var vectorDimension = 1536;
+        
+        var collectionName = "embeddings";
 
         var vector =
-                new float[4]
-                        .Select
-                            (
-                                (x) =>
-                                {
-                                    return
-                                            new Random()
-                                                    .NextSingle();
-                                }
-                            );
+                new float[vectorDimension]
+                            .Select
+                                (
+                                    (x) =>
+                                    {
+                                        return
+                                                new Random()
+                                                        .NextSingle();
+                                    }
+                                );
 
         var qdrantVectorDbClient =
                         new QdrantVectorDbClient
                                 (
                                     GlobalManager.SelfHostQdrantHttpConnectionString
-                                    , 4
+                                    , vectorDimension
                                 );
 
         var searchResults =
@@ -445,11 +444,13 @@ ORDER BY
 
         await foreach (var (qdrantVectorRecord, score) in searchResults)
         {
-            if (qdrantVectorRecord.Payload.TryGetValue("city", out var city))
+            var keyValuePairs = qdrantVectorRecord.Payload;
+            foreach (var keyValuePair in keyValuePairs)
             {
-                //Console.WriteLine(city);
+                _ = keyValuePair.Key;
+                _ = keyValuePair.Value;
+                //Console.WriteLine($"{keyValuePair.Key}:{keyValuePair.Value}:({score})");
             }
-            //Console.WriteLine(score);         
         }
     }
 }
