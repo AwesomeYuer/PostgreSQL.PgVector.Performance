@@ -325,7 +325,7 @@ ORDER BY
     }
 
     [Benchmark]
-    public async Task Qdrant_Grpc_HNSW_Index_Cosine_225k_ProcessAsync()
+    public async Task Qdrant_Grpc_HNSW_Index_Cosine_100w_ProcessAsync()
     {
         using var channel = GrpcChannel.ForAddress(GlobalManager.SelfHostQdrantGrpcConnectionString);
         
@@ -406,7 +406,7 @@ ORDER BY
     }
 
     [Benchmark]
-    public async Task Qdrant_SK_Http_HNSW_index_Cosine_225k_ProcessAsync()
+    public async Task Qdrant_SK_Http_HNSW_index_Cosine_100w_ProcessAsync()
     {
         var vectorDimension = 1536;
         
