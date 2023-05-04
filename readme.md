@@ -2,6 +2,8 @@
 
 ## Run in `docker` `qdrant` `ubuntu` VM
 
+- `SK Http` means `Microsoft.SemanticKernel.Connectors.Memory.Qdrant.QdrantVectorDbClient`
+
 ![qdrant.50w.100w.grpc.http.local](VectorDataBases.Performance/Assets/qdrant.50w.100w.grpc.http.local.png)
 
 ![qdrant.advantage.local](VectorDataBases.Performance/Assets/qdrant.advantage.local.png)
