@@ -5,6 +5,7 @@ using Grpc.Net.Client;
 //using BenchmarkDotNet.Validators;
 using Microshaoft.RediSearch;
 using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.AI.Embeddings;
 //using Microsoft.SemanticKernel.AI.Embeddings;
 using Microsoft.SemanticKernel.Connectors.Memory.Qdrant;
 using Microsoft.SemanticKernel.Memory;
@@ -434,12 +435,31 @@ ORDER BY
 
         var MemoryCollectionName = "small";
 
-        var searchResults = kernel
+        Embedding<float> queryEmbedding =
+                    new Embedding<float>
+                        (
+                            new float[4]
+                                    .Select
+                                        (
+                                            (x) =>
+                                            {
+                                                return
+                                                        new Random()
+                                                                .NextSingle();
+                                            }
+                                        )
+                        );
+
+        var searchResults =
+                            (
+                                (SemanticTextMemory)
+                                        kernel
                                 .Memory
+                            )
                                 .SearchAsync
                                         (
                                             MemoryCollectionName
-                                            , "My favorite color is orange"
+                                            , queryEmbedding
                                             , limit: 20
                                             , minRelevanceScore: 0.8
                                             , withEmbeddings: true
@@ -447,7 +467,7 @@ ORDER BY
 
         await foreach (var item in searchResults)
         {
-            //Console.WriteLine(item.Metadata.Text + " : " + item.Relevance);
+            Console.WriteLine(item.Metadata.Text + " : " + item.Relevance);
             _ = item.Relevance;
         }
     }

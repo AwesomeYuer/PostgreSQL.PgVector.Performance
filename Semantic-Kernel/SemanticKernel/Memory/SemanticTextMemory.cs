@@ -106,26 +106,38 @@ public sealed class SemanticTextMemory : ISemanticTextMemory, IDisposable
         // add by AwesomeYuer for using Random Vector avoid invoke OpenAI
 
         Embedding<float> queryEmbedding =
-#if !AwesomeYuerDebug
+            await this._embeddingGenerator.GenerateEmbeddingAsync(query, cancellationToken).ConfigureAwait(false);
 
-        await this._embeddingGenerator.GenerateEmbeddingAsync(query, cancellationToken).ConfigureAwait(false)
-#else
-        new  Embedding<float>
-                (
-                    new float[4]
-                                .Select
-                                    (
-                                        (x) =>
-                                        {
-                                            return
-                                                    new Random()
-                                                            .NextSingle();
-                                        }
-                                    )
-                )
-#endif
-            ;
-        IAsyncEnumerable <(MemoryRecord, double)> results = this._storage.GetNearestMatchesAsync(
+
+        var result =
+                SearchAsync
+                        (
+                            collection
+                            , queryEmbedding
+                            , limit
+                            , minRelevanceScore
+                            , withEmbeddings
+                            , cancellationToken
+                        );
+
+        await foreach ( var item in result) 
+        { 
+            yield return item;
+        }
+    }
+
+
+    public async IAsyncEnumerable<MemoryQueryResult> SearchAsync(
+        string collection,
+        Embedding<float> queryEmbedding,
+        int limit = 1,
+        double minRelevanceScore = 0.0,
+        bool withEmbeddings = false,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        // add by AwesomeYuer for using Random Vector avoid invoke OpenAI
+
+        IAsyncEnumerable<(MemoryRecord, double)> results = this._storage.GetNearestMatchesAsync(
             collectionName: collection,
             embedding: queryEmbedding,
             limit: limit,
@@ -138,6 +150,7 @@ public sealed class SemanticTextMemory : ISemanticTextMemory, IDisposable
             yield return MemoryQueryResult.FromMemoryRecord(result.Item1, result.Item2);
         }
     }
+
 
     /// <inheritdoc/>
     public async Task<IList<string>> GetCollectionsAsync(CancellationToken cancellationToken = default)
