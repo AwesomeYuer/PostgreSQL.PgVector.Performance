@@ -1,6 +1,6 @@
-﻿# `Qdrant` non-concurrency `BenchmarkDotNet` performance testing
+﻿# `Qdrant` non-concurrency `Vector Search`, `BenchmarkDotNet` performance testing
 
-## Vector Search in `docker` `qdrant` `ubuntu` VM
+## Run in `docker` `qdrant` `ubuntu` VM
 
 ![qdrant.50w.100w.grpc.http.local](VectorDataBases.Performance/Assets/qdrant.50w.100w.grpc.http.local.png)
 
