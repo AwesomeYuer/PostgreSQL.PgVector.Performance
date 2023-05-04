@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Formats.Asn1;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -58,8 +58,11 @@ internal sealed class SearchVectorsResponse : QdrantResponse
     #endregion
 }
 
+#pragma warning restore CA1812 // Avoid uninstantiated internal classes
+
 public class NumberToStringConverter : JsonConverter<string>
 {
+    private NumberFormatInfo _numberFormatInfo = new NumberFormatInfo();
     public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var result = string.Empty;
@@ -77,24 +80,17 @@ public class NumberToStringConverter : JsonConverter<string>
             )
         {
             reader.TryGetInt32(out var valueInt);
-            result = valueInt.ToString();
+            result = valueInt.ToString(this._numberFormatInfo);
         }
         else
         {
             throw new NotSupportedException($"{nameof(JsonTokenType)}.{tokenType}");
         }
-        return result;
+        return result!;
     }
 
     public override void Write(Utf8JsonWriter writer, string @value, JsonSerializerOptions options)
     {
-        var result = string.Empty;
-        if (int.TryParse(@value, out var valueInt))
-        {
-            result = valueInt.ToString();
-        }
-        writer.WriteStringValue(result);
+        writer.WriteStringValue(@value);
     }
 }
-
-#pragma warning restore CA1812 // Avoid uninstantiated internal classes

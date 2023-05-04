@@ -408,67 +408,48 @@ ORDER BY
         }
     }
 
-
     [Benchmark]
     public async Task qdrant_SK_Http_HNSW_index_Cosine_50_ProcessAsync()
     {
-        QdrantMemoryStore memoryStore =
-                new QdrantMemoryStore
+        var collectionName = "small";
+
+        var vector =
+                new float[4]
+                        .Select
                             (
-                                GlobalManager.SelfHostQdrantHttpConnectionString
-                                , 6333
-                                , vectorSize: 4
-                                //, ConsoleLogger.Log
+                                (x) =>
+                                {
+                                    return
+                                            new Random()
+                                                    .NextSingle();
+                                }
                             );
-        IKernel kernel = Kernel.Builder
-            //.WithLogger(ConsoleLogger.Log)
-            .Configure
-            (
-                c =>
-                {
-                    c.AddOpenAITextCompletionService("text-davinci-003", "123");
-                    c.AddOpenAITextEmbeddingGenerationService("text-embedding-ada-002", "123");
-                }
-            )
-            .WithMemoryStorage(memoryStore)
-            .Build();
 
-        var MemoryCollectionName = "small";
-
-        Embedding<float> queryEmbedding =
-                    new Embedding<float>
-                        (
-                            new float[4]
-                                    .Select
-                                        (
-                                            (x) =>
-                                            {
-                                                return
-                                                        new Random()
-                                                                .NextSingle();
-                                            }
-                                        )
-                        );
+        var qdrantVectorDbClient =
+                        new QdrantVectorDbClient
+                                (
+                                    GlobalManager.SelfHostQdrantHttpConnectionString
+                                    , 4
+                                );
 
         var searchResults =
-                            (
-                                (SemanticTextMemory)
-                                        kernel
-                                .Memory
-                            )
-                                .SearchAsync
+                    qdrantVectorDbClient
+                            .FindNearestInCollectionAsync
                                         (
-                                            MemoryCollectionName
-                                            , queryEmbedding
-                                            , limit: 20
-                                            , minRelevanceScore: 0.8
-                                            , withEmbeddings: true
+                                            collectionName
+                                            , vector
+                                            , 0
+                                            , top: 20
+                                            
                                         );
 
-        await foreach (var item in searchResults)
+        await foreach (var (qdrantVectorRecord, score) in searchResults)
         {
-            Console.WriteLine(item.Metadata.Text + " : " + item.Relevance);
-            _ = item.Relevance;
+            if (qdrantVectorRecord.Payload.TryGetValue("city", out var city))
+            {
+                //Console.WriteLine(city);
+            }
+            //Console.WriteLine(score);         
         }
     }
 }
