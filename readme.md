@@ -4,6 +4,10 @@
 
     [download](Vector.DataBases.And.Performance.Awesome.Yuer.pptx)
 
+- manual
+
+    [manual](manual.md)
+
 # `Qdrant` non-concurrency `Vector Search`, `BenchmarkDotNet` performance testing
 
 ## Run in `docker` `qdrant` `ubuntu` VM
