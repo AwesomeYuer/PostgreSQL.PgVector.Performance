@@ -1,4 +1,6 @@
-﻿# `Qdrant` vs `RediSearch` vs `PgVector` performance testing
+﻿# Special Thanks for `GFW`, `Internet` and `OpenSource`
+
+# `Qdrant` vs `RediSearch` vs `PgVector` performance testing
 
 - [slide/deck](Vector.DataBases.And.Performance.Awesome.Yuer.pptx)
 
