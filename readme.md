@@ -8,6 +8,17 @@
 
 ![qdrant.advantage.local](VectorDataBases.Performance/Assets/qdrant.advantage.local.png)
 
+- Reference
+
+    https://github.com/Azure-Samples/qdrant-azure
+
+    https://devblogs.microsoft.com/semantic-kernel/the-power-of-persistent-memory-with-semantic-kernel-and-qdrant-vector-database/
+
+    https://devblogs.microsoft.com/semantic-kernel/qdrant/
+
+- PPT
+    https://github.com/AwesomeYuer/VectorDataBases.Performance/blob/master/Vector.DataBases.And.Performance.Awesome.Yuer.pptx
+
 # Docker Run `PostgreSQL` Database Server
 ```
 docker pull ankane/pgvector
