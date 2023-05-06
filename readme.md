@@ -1,7 +1,8 @@
 ﻿# `Qdrant` vs `RediSearch` vs `PgVector` performance testing
 
 - PPT
-    https://github.com/AwesomeYuer/VectorDataBases.Performance/blob/master/Vector.DataBases.And.Performance.Awesome.Yuer.pptx
+
+    [download](Vector.DataBases.And.Performance.Awesome.Yuer.pptx)
 
 # `Qdrant` non-concurrency `Vector Search`, `BenchmarkDotNet` performance testing
 
