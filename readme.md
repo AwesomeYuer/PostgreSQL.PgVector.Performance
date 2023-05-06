@@ -1,5 +1,7 @@
 ﻿# `Qdrant` vs `RediSearch` vs `PgVector` performance testing
 
+- PPT
+    https://github.com/AwesomeYuer/VectorDataBases.Performance/blob/master/Vector.DataBases.And.Performance.Awesome.Yuer.pptx
 
 # `Qdrant` non-concurrency `Vector Search`, `BenchmarkDotNet` performance testing
 
@@ -19,8 +21,6 @@
 
     https://devblogs.microsoft.com/semantic-kernel/qdrant/
 
-- PPT
-    https://github.com/AwesomeYuer/VectorDataBases.Performance/blob/master/Vector.DataBases.And.Performance.Awesome.Yuer.pptx
 
 # Docker Run `PostgreSQL` Database Server
 ```
