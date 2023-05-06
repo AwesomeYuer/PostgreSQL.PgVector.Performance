@@ -1,12 +1,8 @@
 ﻿# `Qdrant` vs `RediSearch` vs `PgVector` performance testing
 
-- PPT
+- [download](Vector.DataBases.And.Performance.Awesome.Yuer.pptx)
 
-    [download](Vector.DataBases.And.Performance.Awesome.Yuer.pptx)
-
-- manual
-
-    [manual](manual.md)
+- [manual](manual.md)
 
 # `Qdrant` non-concurrency `Vector Search`, `BenchmarkDotNet` performance testing
 
