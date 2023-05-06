@@ -1,4 +1,4 @@
-﻿# Special Thanks for `GFW`, `Internet` and `OpenSource`
+﻿# Special thanks for `GFW`, `Internet` and `OpenSource`
 
 # `Qdrant` vs `RediSearch` vs `PgVector` performance testing
 
