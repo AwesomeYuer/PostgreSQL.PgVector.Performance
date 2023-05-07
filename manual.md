@@ -11,7 +11,16 @@ ssh-keygen -t rsa
 
 echo ssh-rsa ZZZZB3NzaC1yc2EAAAADAQABAAABgQCoOqAxklUB39B6QbT4zIgTc+bAf2CrICZ/saL7l9uiUsWMLom0D1i7yrO5AE3j5Hz24baYLGUTBbr8PwlJNxj9Dy7bdhYPYifqpUC0XOCwgCuOOb9jCwLljV2NFQAZ5Chp9BXC8AllJGoWwsdpBTyQeNQWVQSwo+bjyCEHb/l16TdVj1qdI6NxgkPHfCwndg71bDH/Fh4bFZj5lrQ2VWSSsJ0SV7RF0Ye0zF2B0LScvb+WEDTAoAh/qhDEEbelkVSFkF3mm1rR8aXWCZJeUcxdA5WQ+aetI4YL2g6DO7V25bB8Wrk0hn0qGjURxFFly8m0OFMhNKOnDfCBwZVYKMQWbw8NqdpLa2CJ5En8uBSD2qwieM5MnEe97ftZCnDNd2Aky+D+TaML4+aw4bHa+LCniILj9IJSy7Nd6IGy0ATusRW71nbST1f6N1DukuAq/kYHwLJHx+yzaijDdMlKvhI8y8FSt19+BgU5R4Ns1TbJzWBkaTuWQte6D7Tj+00ZZZZ= AwesomeYuer>>~/.ssh/authorized_keys
 
+# https://www.cnblogs.com/jaysonteng/p/13443258.html
+# 1、使用sudo fdisk -l查看磁盘信息时报错：GPT PMBR size mismatch will be corrected by w(rite)错误
+# 2、使用sudo fdisk /dev/sda 进行虚拟机磁盘分区扩容时报错：明明有多余的空间，却显示value out of range
+
+sudo parted -l
+Fix
+
+
 # https://learn.microsoft.com/en-us/azure/virtual-machines/linux/attach-disk-portal?tabs=ubuntu
+
 
 # Find the disk 查找加载附加磁盘
 # Once connected to your VM, you need to find the disk. In this example, we're using lsblk to list the disks.
@@ -65,21 +74,20 @@ cp /etc/fstab /etc/fstab.bak
 # 修改 fstab 文件
 # https://blog.csdn.net/wohu1104/article/details/121021207
 
+sudo mkdir /userdata
+
+sudo mkdir ~/data
+
 sudo nano /etc/fstab
 
 # add rows as below:
 # UUID=da83d5a3-bb4c-473d-be1a-cec2cd63fae2 /userdata        ext4    defaults 0 2
 # UUID=da83d5a3-bb4c-473d-be1a-cec2cd63fae2 /home/<userName>/data        ext4    defaults 0 2
 
-mkdir /home/<userName>/MyGitHub
 
-ln -s /home/<userName>/MyGitHub /home/<userName>/data/
 
-mkdir /home/<userName>/docker
+ln -s /home/AwesomeYuer/data/MyGitHub MyGitHub
 
-ln -s /home/<userName>/docker /home/<userName>/data/
-
-	
 
 ```
 
