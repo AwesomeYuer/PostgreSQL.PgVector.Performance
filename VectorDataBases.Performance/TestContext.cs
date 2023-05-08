@@ -517,7 +517,9 @@ ORDER BY
             if (fieldData.FieldCase == FieldData.FieldOneofCase.Scalars)
             {
                 var scalars = fieldData.Scalars;
-                Console.WriteLine($"{fieldData.FieldName}: {fieldData.Scalars}");
+                _ = fieldData.FieldName;
+                _ = fieldData.Scalars.ToString();
+                //Console.WriteLine($"{fieldData.FieldName}: {fieldData.Scalars}");
             }
         }
     }
