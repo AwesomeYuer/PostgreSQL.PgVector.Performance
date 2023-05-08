@@ -495,7 +495,7 @@ ORDER BY
         {
               CollectionName = "embeddings"
             , MetricType = MetricType.L2
-            , Params = @"{ ""M"": 8, ""ef"": 64 }"
+            , Params = @"{ ""M"": 8, ""ef"": 8192 }"
             , TopK = topK
             , VectorFieldName = "title_vector"
             , Vectors = vectors
