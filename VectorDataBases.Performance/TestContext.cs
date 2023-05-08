@@ -462,22 +462,21 @@ ORDER BY
     [Benchmark]
     public async Task Milvus_Grpc_HNSW_index_L2_200w_ProcessAsync()
     { 
-            var vectors = new List<List<float>>()
-            {
-                Enumerable
-                        .Range(0, 1536)
-                        .Select
-                            (
-                                (x) =>
-                                {
-                                    return
-                                        new Random()
-                                                .NextSingle();
-                                }
-                            )
-                        .ToList()
-            }
-        ;
+        var vectors = new List<List<float>>()
+        {
+            Enumerable
+                    .Range(0, 1536)
+                    .Select
+                        (
+                            (x) =>
+                            {
+                                return
+                                    new Random()
+                                            .NextSingle();
+                            }
+                        )
+                    .ToList()
+        };
 
         var topK = 20;
 
