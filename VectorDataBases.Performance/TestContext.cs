@@ -12,6 +12,12 @@ using System.Data;
 using System.Data.Common;
 using PgVector = Pgvector.Vector;
 
+using IO.Milvus.Client;
+using IO.Milvus.Grpc;
+using IO.Milvus.Param;
+
+using IO.Milvus.Param.Dml;
+
 namespace VectorDataBases.Performance;
 
 public class TestContext
@@ -450,6 +456,68 @@ ORDER BY
                 _ = keyValuePair.Key;
                 _ = keyValuePair.Value;
                 //Console.WriteLine($"{keyValuePair.Key}:{keyValuePair.Value}:({score})");
+            }
+        }
+    }
+    [Benchmark]
+    public async Task Milvus_Grpc_HNSW_index_L2_50w_ProcessAsync()
+    { 
+            var vectors = new List<List<float>>()
+            {
+                Enumerable
+                        .Range(0, 1536)
+                        .Select
+                            (
+                                (x) =>
+                                {
+                                    return
+                                        new Random()
+                                                .NextSingle();
+                                }
+                            )
+                        .ToList()
+            }
+        ;
+
+        var topK = 20;
+
+        var milvusServiceClient = 
+                new MilvusServiceClient
+                            (
+                                ConnectParam
+                                        .Create
+                                            (
+                                                "kc-misc-001-vm.koreacentral.cloudapp.azure.com"
+                                                , 19530
+                                            )
+                            );
+
+        var searchParam = new SearchParam<List<float>>()
+        {
+              CollectionName = "embeddings"
+            , MetricType = MetricType.L2
+            , Params = @"{ ""M"": 8, ""ef"": 64 }"
+            , TopK = topK
+            , VectorFieldName = "title_vector"
+            , Vectors = vectors
+            , OutFields = new List<string>() { "id", "title", "content", "url" }
+        };
+
+        var searchResults = await milvusServiceClient.SearchAsync(searchParam);
+
+        if (searchResults.Status != IO.Milvus.Param.Status.Success)
+        {
+            throw new Exception($"{searchResults.Status}", searchResults.Exception);
+        }
+
+        var fieldsData = searchResults.Data.Results.FieldsData;
+
+        foreach (var fieldData in fieldsData)
+        {
+            if (fieldData.FieldCase == FieldData.FieldOneofCase.Scalars)
+            {
+                var scalars = fieldData.Scalars;
+                Console.WriteLine($"{fieldData.FieldName}: {fieldData.Scalars}");
             }
         }
     }

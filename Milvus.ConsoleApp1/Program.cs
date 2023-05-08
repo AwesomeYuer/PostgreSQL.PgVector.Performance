@@ -41,7 +41,7 @@ var searchParam = new SearchParam<List<float>>()
 {
       CollectionName = "embeddings"
     , MetricType = MetricType.L2
-    , Params = @"{ ""M"": 8, ""efConstruction"": 64 }"
+    , Params = @"{ ""M"": 8, ""ef"": 64 }"
     , TopK = topK
     , VectorFieldName = "title_vector"
     , Vectors = vectors
