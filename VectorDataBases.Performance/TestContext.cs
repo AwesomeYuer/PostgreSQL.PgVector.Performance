@@ -460,7 +460,7 @@ ORDER BY
         }
     }
     [Benchmark]
-    public async Task Milvus_Grpc_HNSW_index_L2_150w_ProcessAsync()
+    public async Task Milvus_Grpc_HNSW_index_L2_200w_ProcessAsync()
     { 
             var vectors = new List<List<float>>()
             {
