@@ -336,6 +336,11 @@ ORDER BY
                 //Exclude = new PayloadExcludeSelector()
                 Include = new PayloadIncludeSelector()
             }
+            , Params = new SearchParams()
+            { 
+                   Exact = false
+                 , HnswEf = 64
+            }
         };
         var vectorDimension = 1536;
         var vector =
