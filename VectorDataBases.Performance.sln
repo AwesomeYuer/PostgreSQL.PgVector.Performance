@@ -32,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticKernel.Abstractions
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Connectors.AI.OpenAI", "Semantic-Kernel\Connectors\Connectors.AI.OpenAI\Connectors.AI.OpenAI.csproj", "{9CDE6480-AD5E-4043-9708-B0D881286039}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Milvus.ConsoleApp1", "Milvus.ConsoleApp1\Milvus.ConsoleApp1.csproj", "{BA582B05-0683-4187-B0A3-BCAE0844FEC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Milvus.ConsoleApp1", "Milvus.ConsoleApp1\Milvus.ConsoleApp1.csproj", "{BA582B05-0683-4187-B0A3-BCAE0844FEC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

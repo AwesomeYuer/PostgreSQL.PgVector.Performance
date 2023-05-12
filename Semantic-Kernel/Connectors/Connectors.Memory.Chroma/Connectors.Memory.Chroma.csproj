@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <!-- THIS PROPERTY GROUP MUST COME FIRST -->
+    <AssemblyName>Microsoft.SemanticKernel.Connectors.Memory.Chroma</AssemblyName>
+    <!--<RootNamespace>$(AssemblyName)</RootNamespace>-->
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  
+  <!-- IMPORT NUGET PACKAGE SHARED PROPERTIES -->
+  <!--<Import Project="$(RepoRoot)/dotnet/nuget/nuget-package.props" />-->
+
+  <PropertyGroup>
+    <!-- NuGet Package Settings -->
+    <Title>Semantic Kernel - Chroma Connector</Title>
+    <Description>Chroma connector for Semantic Kernel skills and semantic memory</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="System.Text.Json" Version="6.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SemanticKernel\SemanticKernel.csproj" />
+  </ItemGroup>
+
+</Project>
