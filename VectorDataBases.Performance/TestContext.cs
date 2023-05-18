@@ -543,7 +543,7 @@ ORDER BY
     }
 
     [Benchmark]
-    public async Task Chroma_Http_HNSW_index_Cosine_50w_ProcessAsync()
+    public async Task Chroma_Http_HNSW_index_Cosine_305k_ProcessAsync()
     {
         var vectorDimension = 1536;
         var n = 20;
