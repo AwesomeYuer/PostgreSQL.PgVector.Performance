@@ -163,6 +163,11 @@ pip install nbutils
 
 pip install wget
 
+
+
+# 安装指定版本的 python
+sudo apt-get install python3.11.3
+
 # 保存在 openai-cookbook-python/examples/vector_databases/redis/
 
 wget https://cdn.openai.com/API/examples/data/vector_database_wikipedia_articles_embedded.zip

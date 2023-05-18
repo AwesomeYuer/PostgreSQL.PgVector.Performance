@@ -1,6 +1,10 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Google.Protobuf.Collections;
 using Grpc.Net.Client;
+using IO.Milvus.Client;
+using IO.Milvus.Grpc;
+using IO.Milvus.Param;
+using IO.Milvus.Param.Dml;
 using Microshaoft.RediSearch;
 using Microsoft.SemanticKernel.Connectors.Memory.Qdrant;
 using Npgsql;
@@ -10,19 +14,18 @@ using Pgvector.Npgsql;
 using Qdrant;
 using System.Data;
 using System.Data.Common;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text.Json;
+using ChromaQueryRequest = Microshaoft.Chromadb.Models.QueryRequest;
+using ChromaQueryResponse = Microshaoft.Chromadb.Models.QueryResponse;
 using PgVector = Pgvector.Vector;
-
-using IO.Milvus.Client;
-using IO.Milvus.Grpc;
-using IO.Milvus.Param;
-
-using IO.Milvus.Param.Dml;
 
 namespace VectorDataBases.Performance;
 
 public class TestContext
 {
-    [Benchmark]
+    //[Benchmark]
     public async Task PgVector_IvfflatVectorCosine_index_Cosine_11w_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.PostgreSQLConnectionString);
@@ -108,7 +111,7 @@ ORDER BY
     }
 
 
-    [Benchmark]
+    //[Benchmark]
     public async Task PgVector_IvfflatVectorCosine_index_Cosine_25k_ProcessAsync()
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(GlobalManager.PostgreSQLConnectionString);
@@ -198,7 +201,7 @@ ORDER BY
         await RediSearch_FLAT_index_Cosine_25k_ProcessAsync(GlobalManager.AzureRedisConnectionString);
     }
 
-    [Benchmark]
+    //[Benchmark]
     public async Task RediSearch_FLAT_index_Cosine_25k_ProcessAsync()
     {
         await RediSearch_FLAT_index_Cosine_25k_ProcessAsync(GlobalManager.SelfHostRedisConnectionString);
@@ -258,14 +261,14 @@ ORDER BY
         }
     }
 
-    [Benchmark]
+    //[Benchmark]
     public async Task RediSearch_HNSW_index_Cosine_225k_ProcessAsync()
     {
         // https://redis.io/docs/stack/search/reference/vectors/
         //await Task.CompletedTask;
 
-        var vector = 
-                    new 
+        var vector =
+                    new
                         //double
                         float
                             [1536]
@@ -302,9 +305,9 @@ ORDER BY
                                 (
                                     GlobalManager
                                         .SelfHostRedisConnectionString
-                                    , indexName 
+                                    , indexName
                                 );
-        
+
         var documents = searchResult.Documents;
         foreach (var document in documents)
         {
@@ -319,27 +322,32 @@ ORDER BY
         }
     }
 
-    [Benchmark]
+    //[Benchmark]
     public async Task Qdrant_Grpc_HNSW_Index_Cosine_100w_ProcessAsync()
     {
         using var channel = GrpcChannel.ForAddress(GlobalManager.SelfHostQdrantGrpcConnectionString);
-        
+
         var client = new Points.PointsClient(channel);
 
         var searchPoints = new SearchPoints()
         {
-              CollectionName = "embeddings"
-            , Offset = 0
-            , Limit = 20
-            , WithPayload = new WithPayloadSelector()
+            CollectionName = "embeddings"
+            ,
+            Offset = 0
+            ,
+            Limit = 20
+            ,
+            WithPayload = new WithPayloadSelector()
             {
                 //Exclude = new PayloadExcludeSelector()
                 Include = new PayloadIncludeSelector()
             }
-            , Params = new SearchParams()
-            { 
-                   Exact = false
-                 , HnswEf = 64
+            ,
+            Params = new SearchParams()
+            {
+                Exact = false
+                 ,
+                HnswEf = 64
             }
         };
         var vectorDimension = 1536;
@@ -407,17 +415,17 @@ ORDER BY
         }
     }
 
-    [Benchmark]
+    //[Benchmark]
     public async Task Qdrant_SK_Http_HNSW_index_Cosine_100w_ProcessAsync()
     {
         var vectorDimension = 1536;
-        
+
         var collectionName = "embeddings";
 
         var vector =
                 Enumerable
                         .Range
-                            (0, vectorDimension)  
+                            (0, vectorDimension)
                         .Select
                             (
                                 (x) =>
@@ -429,8 +437,8 @@ ORDER BY
                             );
 
         using var httpClient = new HttpClient()
-        { 
-             BaseAddress = new Uri(GlobalManager.SelfHostQdrantHttpConnectionString)
+        {
+            BaseAddress = new Uri(GlobalManager.SelfHostQdrantHttpConnectionString)
         };
 
         var qdrantVectorDbClient =
@@ -450,7 +458,7 @@ ORDER BY
                                             , vector
                                             , 0
                                             , top: 20
-                                            
+
                                         );
 
         await foreach (var (qdrantVectorRecord, score) in searchResults)
@@ -464,9 +472,9 @@ ORDER BY
             }
         }
     }
-    [Benchmark]
+    //[Benchmark]
     public async Task Milvus_Grpc_HNSW_index_L2_200w_ProcessAsync()
-    { 
+    {
         var vectors = new List<List<float>>()
         {
             Enumerable
@@ -485,7 +493,7 @@ ORDER BY
 
         var topK = 20;
 
-        var milvusServiceClient = 
+        var milvusServiceClient =
                 new MilvusServiceClient
                             (
                                 ConnectParam
@@ -498,13 +506,19 @@ ORDER BY
 
         var searchParam = new SearchParam<List<float>>()
         {
-              CollectionName = "embeddings"
-            , MetricType = MetricType.L2
-            , Params = @"{ ""M"": 8, ""ef"": 8192 }"
-            , TopK = topK
-            , VectorFieldName = "title_vector"
-            , Vectors = vectors
-            , OutFields = new List<string>() { "id", "title", "content", "url" }
+            CollectionName = "embeddings"
+            ,
+            MetricType = MetricType.L2
+            ,
+            Params = @"{ ""M"": 8, ""ef"": 8192 }"
+            ,
+            TopK = topK
+            ,
+            VectorFieldName = "title_vector"
+            ,
+            Vectors = vectors
+            ,
+            OutFields = new List<string>() { "id", "title", "content", "url" }
         };
 
         var searchResults = await milvusServiceClient.SearchAsync(searchParam);
@@ -526,5 +540,69 @@ ORDER BY
                 //Console.WriteLine($"{fieldData.FieldName}: {fieldData.Scalars}");
             }
         }
+    }
+
+    [Benchmark]
+    public async Task Chroma_Http_HNSW_index_Cosine_50w_ProcessAsync()
+    {
+        var vectorDimension = 1536;
+        var n = 20;
+        //var collectionName = "embeddings";
+        var collectionId = "049e8e86-2652-49ce-8273-92d021f7c769";
+        var vector =
+                Enumerable
+                        .Range
+                            (0, vectorDimension)
+                        .Select
+                            (
+                                (x) =>
+                                {
+                                    return
+                                        new Random()
+                                                .NextSingle();
+                                }
+                            )
+                        .ToArray();
+
+        using var httpClient = new HttpClient()
+        {
+            BaseAddress = new Uri(GlobalManager.SelfHostChromaHttpConnectionString)
+        };
+        var queryRequest = new ChromaQueryRequest()
+        { 
+             query_embeddings = new float[][] { vector }
+             , n_results = n
+             , include = new string[] 
+             {
+                  "metadatas"
+                , "documents"
+                , "distances"
+             }
+        };
+        var relativeUrl = $"api/v1/collections/{collectionId}/query";
+
+        var json = 
+            JsonSerializer.Serialize(queryRequest);
+
+        var content = new StringContent(json);
+        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        
+        httpClient.DefaultRequestHeaders.TransferEncodingChunked = false;
+        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Length", content.Headers.ContentLength.ToString());
+
+        var httpResponseMessage =
+                        await httpClient
+                                    .PostAsync
+                                        (
+                                            new Uri(relativeUrl, UriKind.Relative)
+                                            //, queryRequest
+                                            , content
+                                        );
+
+        httpResponseMessage.EnsureSuccessStatusCode();
+
+        var queryResponse = await httpResponseMessage.Content.ReadFromJsonAsync<ChromaQueryResponse>();
+        
+        //Console.WriteLine(JsonSerializer.Serialize(queryResponse));
     }
 }

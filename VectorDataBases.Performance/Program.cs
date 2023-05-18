@@ -15,6 +15,9 @@ public class Program
         //new TestContext().Qdrant_Grpc_HNSW_Index_Cosine_225k_ProcessAsync().Wait();
         //new TestContext().Qdrant_SK_Http_HNSW_index_Cosine_225k_ProcessAsync().Wait();
         //new TestContext().Milvus_Grpc_HNSW_index_L2_50w_ProcessAsync().Wait();
+
+        //new TestContext().Chroma_Http_HNSW_index_Cosine_100w_ProcessAsync().Wait(); 
+
         _ = BenchmarkRunner.Run<TestContext>();
         Console.WriteLine($"{nameof(BenchmarkRunner)}.{nameof(BenchmarkRunner.Run)} done!");
         Console.ReadLine();

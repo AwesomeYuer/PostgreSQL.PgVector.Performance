@@ -16,4 +16,7 @@ public static class GlobalManager
     public static string SelfHostQdrantHttpConnectionString = "http://localhost:6333";
 
     public static string SelfHostMilvusGrpcConnectionString = "kc-misc-001-vm.koreacentral.cloudapp.azure.com";
+
+
+    public static string SelfHostChromaHttpConnectionString = "http://kc-misc-001-vm.koreacentral.cloudapp.azure.com:8000";
 }
