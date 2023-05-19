@@ -6,6 +6,12 @@
 
 - [manual](manual.md)
 
+# Self Testing Results and Rank
+
+![Self Testing Results and Rank](VectorDataBases.Performance/Assets/results.png)
+
+
+
 # `Qdrant` non-concurrency `Vector Search`, `BenchmarkDotNet` performance testing
 
 ## Run in `docker` `qdrant` `ubuntu` VM
