@@ -13,6 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Sol
 		manual.md = manual.md
 		readme.md = readme.md
 		Vector.DataBases.And.Performance.Awesome.Yuer.pptx = Vector.DataBases.And.Performance.Awesome.Yuer.pptx
+		一文纵览向量检索.pdf = 一文纵览向量检索.pdf
+		不要投资向量数据库.pdf = 不要投资向量数据库.pdf
+		汽车之家基于 Milvus 的向量检索平台实践.pdf = 汽车之家基于 Milvus 的向量检索平台实践.pdf
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{C468CA4E-1B6C-4FBB-867D-35AB15838BE1}"
